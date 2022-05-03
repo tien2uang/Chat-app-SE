@@ -1,0 +1,41 @@
+.tab__1 {
+    width: 100px;
+    height: 750px;
+    background-color: gray; 
+    padding-top: 70px;
+}
+
+
+.tab__1 a{
+    color: black;
+}
+
+.tab__1__list-items {
+    width: 100px;
+    height: 64px;
+    font-size: 18px;
+    display:inline-flex ;
+    align-items: center;
+    justify-content: center;
+    background-color: grey;
+    border: none;
+}
+
+
+.tab__1__list-items:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
+    border: 0 1px solid ;
+}
+
+.items{
+    font-size: 25px;
+    border: none; 
+    color: #062b49;
+}
+
+.items:hover{
+    cursor: pointer;
+    border: 0 1px solid ;
+    color: #0091ff;
+}
