@@ -23,7 +23,7 @@ export default function LeftBar() {
                             </a>
                         </button>
                         <button class="tab__1__list-items" title="Thoát">
-                            <a href="">
+                            <a href="http://localhost:3000/signIn">
                                 <FaSignOutAlt className="items" />
                             </a>
                         </button>
