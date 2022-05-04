@@ -2,6 +2,7 @@
     width: 1070px;
     height: 750px;
     background-color: #fff;
+    
 }
 
 /*
@@ -53,19 +54,22 @@ tab__3_inputChat
     font-size: 20px;
     outline: none; 
     padding-left: 10px;
-
+    
 }
+
 
 .itemsChat {
     font-size: 25px;
     border: none; 
-    background-color: white;
+    background-color: rgb(234, 232, 232);
     color: #062b49;
-
+    
 }
 
 .itemsChat:hover {
     cursor: pointer;
-    border: 0 1px solid ;
+    border: 0 1px solid;
     color: #0091ff;
 }
+
+/* commit first */
