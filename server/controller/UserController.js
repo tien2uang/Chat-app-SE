@@ -1,11 +1,23 @@
 const User = require('../model/User');
 
 class UserController {
-    async add(req, res) {
-
+    async addUser(req, res) {
+        const testData = {
+            username: "tq2002",
+            name: "Quang",
+            password: "12345",
+            friends: ["Quna", "Yepp"]
+        }
+        const newUser = new User(testData);
+        try {
+            let savedUser = newUser.save();
+            res.json(savedUser.data);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    async infomation(req, res) {
+    async getUserInfomation(req, res) {
         const id = req.params.id;
         try {
             const userInfomation = await User.findById(id);
@@ -41,8 +53,8 @@ class UserController {
     }
 
     async addFriend(req, res) {
-        const userId= req.params.id;
-        const temp
+        const userId = req.params.id;
+
     }
 
     async delelteFriend(req, res) {
@@ -50,4 +62,4 @@ class UserController {
     }
 }
 
-module.exports = UserController;
+module.exports = new UserController;
