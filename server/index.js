@@ -12,6 +12,9 @@ mongoose.connect(dbURI)
     .catch((err) => console.log(err));
 
 
+
+app.use("/api/conversations", conversationRouter);
+app.use("/api/messages", messageRouter);
 app.listen(8800, () => {
     console.log("Backend server is running!");
   });
