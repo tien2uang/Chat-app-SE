@@ -69,7 +69,10 @@ tab__3_inputChat
 .itemsChat:hover {
     cursor: pointer;
     border: 0 1px solid;
-    color: #0091ff;
+    /* color: #0091ff; */
+    color: black;
 }
 
 /* commit first */
+
+/* bla bla */
