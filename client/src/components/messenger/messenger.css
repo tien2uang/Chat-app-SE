@@ -1,78 +1,85 @@
 .tab__3 {
-    width: 1070px;
-    height: 750px;
     background-color: #fff;
-    
+    flex: 3;
 }
 
-/*
-tab__3_infoChat
-tab__3_list
-tab__3_inputChat
-*/
 
-.tab__3_infoChat {
-    height: 68px;
-    width: 100%;
-    border-left: 0;
-    border-right: 0px;
-    border-top: 0px;
-    border-bottom: 1px;
-    border-style: solid;
-    border-color: rgb(192, 190, 190); 
+.chat_masseages {
+    margin-bottom: 10px;
+    background-color: rgb(216, 251, 251);
 }
 
-.tab__3_list {
-    list-style: none;
-    height: 46px;
-    width: 100%;
-    border-left: 0;
-    border-right: 0px;
-    border-top: 1px;
-    border-bottom: 0;
-    border-style: solid;
-    border-color: rgb(192, 190, 190); 
-    margin-top: 580px;
+
+/* chat_header
+    user
+        user_avatar
+        user_name
+
+chat_masseages
+chat_input */
+
+.chat_header {
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
 }
 
-.tab__3_inputChat {
-    height: 55px;
-    width: 100%;
-    border-left: 0;
-    border-right: 0;
-    border-top-width: 1px;
-    border-bottom-width: 0px;
-    border-style: solid;
-    border-color: rgb(192, 190, 190);
-   
+.user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.input_chat {
-    height: 55px;
+.user_avatar {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+}
+
+.chat_masseages {
+    height: 80%;
+}
+
+.chat_input {
+    height: calc(10% - 10px);
+    display: flex;
+}
+
+.chat_input_wrapper {
+    border-radius: 20px;
+    background-color: rgb(241, 241, 241);
     width: 80%;
-    border-style: none;
+    height: 60%;
+    margin-left: 50px;
+}
+
+input {
+    width: 93%;
+    height: 100%;
+    border: none;
+    outline-width: 0;
     font-size: 20px;
-    outline: none; 
-    padding-left: 10px;
+    border-radius: 20px;
+    background-color: rgb(241, 241, 241);
+    margin-left: 10px;
     
 }
 
-
-.itemsChat {
+.send {
+    height: 65%;
     font-size: 25px;
-    border: none; 
-    background-color: rgb(234, 232, 232);
+    border-radius: 15px;
+    margin-left: 8px;
+    border: none;
+    background-color: white;
+}
+
+.send_icon {
     color: #062b49;
-    
 }
 
-.itemsChat:hover {
-    cursor: pointer;
-    border: 0 1px solid;
-    /* color: #0091ff; */
-    color: black;
+.send_icon :hover {
+    color: aqua;
 }
-
-/* commit first */
-
-/* bla bla */

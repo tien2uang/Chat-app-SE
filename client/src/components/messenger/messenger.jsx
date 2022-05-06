@@ -1,28 +1,37 @@
 import "./messenger.css"
-import { FaSmile, FaPaperPlane } from "react-icons/fa";
+import { FaPaperPlane } from "react-icons/fa";
+
+/* FaSmile */
 
 export default function Messenger() {
     return (
         <div class="tab__3">
-            <div class="tab__3_infoChat">
+           
+            <div className="chat_header">
+                <div className="user">
+                    <div className="user_avatar">
+                        <img className="user_avatar" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" alt="" />
+                    </div>
 
+                    <div className="user_name">
+                        <h2 className="user_name">room name</h2>
+                    </div>
+
+                </div>
             </div>
-            <div class="tab__3_list">
-                <li class="tab__3_list-items"></li>
-                <li class="tab__3_list-items"></li>
-                <li class="tab__3_list-items"></li>
-            </div>
 
-            <div class="tab__3_inputChat">
-                <input class="input_chat" type="text" placeholder="Nhập tin nhắn..." />
-                        
-                <button class="icon">
-                    <FaSmile className="itemsChat" />
-                </button>
+            <div className="chat_masseages"></div>
 
-                <button class="send">
-                    <FaPaperPlane className = "itemsChat" />
+            
+            <div className="chat_input">
+                <div className="chat_input_wrapper">
+                    <input type="text" className="input" placeholder="Nhập tin nhắn..."/>      
+                </div>
+
+                <button className="send" title="Gửi">
+                    <FaPaperPlane className = "send_icon" />
                 </button>
+       
             </div>
         </div>
     );
