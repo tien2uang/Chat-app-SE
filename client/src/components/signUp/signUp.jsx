@@ -1,34 +1,48 @@
-import "./signUp.css"
+import "./signUp.css";
 
 export default function SignUp() {
-    return (
-        <div class="wrapper">
-        <section class="form-sign">
-            <header>Welcome to our chat app!</header>
-            <div class="name-details">
-                <div class="field">
-                    <label>User Name</label>
-                    <input type="text" placeholder="User Name" /> 
-                </div>
-                <div class="field">
-                    <label>Password</label>
-                    <input type="text" placeholder="Password" />
-                    <i class="fas fa-eye"></i>
-                </div>
-                <div class="field">
-                    <label>Email</label>
-                    <input type="text" placeholder="Email" /> 
-                </div>
-                <div class="field-image">
-                    <label>Image</label>
-                    <input type="file" /> 
-                </div>
-                <div class="field sign">
-                    <input type="submit" value="Sign up" />
-                </div>
-            </div>
-            <div class="link-to-sign">You had an account? <a href="http://localhost:3000/signIn">Sign in</a></div>
-        </section>
+  return (
+    <div className="signUp">
+      <div className="wrapper">
+        <div className="signUpLeft"></div>
+        <div className="signUpRight">
+          <div>
+            <h1 className="title">Welcome to our chat app!</h1>
+          </div>
+          <div className="signUpRightWrapper">
+          <form className="signUpBox">
+            <input placeholder="Username" required className="signUpInput" />
+            <input
+              placeholder="Email"
+              required
+              className="signUpInput"
+              type="email"
+            />
+            <input
+              placeholder="Password"
+              required
+              className="signUpInput"
+              type="password"
+              minLength="6"
+            />
+            <input
+              placeholder="Password Again"
+              required
+              className="signUpInput"
+              type="password"
+            />
+            <button className="signUpButton" type="submit">
+              Sign Up
+            </button>
+            <span className="hadAccount">You had an account ?</span>
+            <button className="signUpRegisterButton" onClick={() => {window.location.href = "http://localhost:3000/signIn"}}>
+                Sign In
+            </button>
+          </form>
+          </div>
+          
+        </div>
+      </div>
     </div>
-    ); 
+  );
 }

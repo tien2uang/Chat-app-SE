@@ -1,0 +1,49 @@
+.friendViewer {
+    max-width: 1070px;
+    display: block;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    color: gray;
+    font-weight: 900;
+}
+
+.name {
+    padding-bottom: 10px;
+}
+
+img {
+    border-radius: 50%;
+}
+
+.friendItems {
+    width: 220px;
+    height: 315px;
+    display: inline-block; 
+    text-align: center;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.addFriendButton {
+    padding-top: 10px;
+    padding-bottom: 25px;
+    border-radius: 16px;
+    color: white;
+    background-color: gray;
+    font-weight: 700;
+    height: 10px;
+    width: 100%;
+}
+
+.addFriendButton:hover {
+    background-color: whitesmoke;
+    color: black;
+    cursor: pointer;
+}
