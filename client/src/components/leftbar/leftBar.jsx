@@ -1,7 +1,7 @@
 import "./leftBar.css";
 import { BsFillChatFill } from "react-icons/bs";
 import { FaUserFriends, FaSignOutAlt } from "react-icons/fa";
-import Profile from "../profile/profile";
+import Profile from "../../pages/profile/profile";
 
 export default function LeftBar() {
   return (

@@ -1,7 +1,7 @@
 import "./home.css"
-import LeftBar from "../leftbar/leftBar";
-import Friends from "../friends/friends";
-import Messenger from "../messenger/messenger";
+import LeftBar from "../../components/leftbar/leftBar";
+import Friends from "../../components/friends/friends";
+import Messenger from "../../components/messenger/messenger";
 
 export default function Home() {
     return (
