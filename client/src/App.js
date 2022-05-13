@@ -1,7 +1,7 @@
-import SignIn from './components/signIn/signIn';
-import SignUp from './components/signUp/signUp';
-import Home from './components/home/home';
-import Friend from './components/friendPage/friend';
+import SignIn from './pages/signIn/signIn';
+import SignUp from './pages/signUp/signUp';
+import Home from './pages/home/home';
+import Friend from './pages/friendPage/friend';
 import {
   BrowserRouter as Router,
   Routes,

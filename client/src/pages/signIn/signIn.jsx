@@ -11,7 +11,7 @@ export default function SignIn() {
           </div>
           <div className="signInRightWrapper">
             <form className="signInBox">
-              <input placeholder="Username" required className="signUpInput" />
+              <input placeholder="Username" required className="signInInput" />
               <input
                 placeholder="Password"
                 type="password"
@@ -21,7 +21,7 @@ export default function SignIn() {
               <button className="signInButton" type="submit">
                 Sign In
               </button>
-              <a className="signInForgot">Forgot Password?</a>
+              <span className="signInForgot">Don't have an account?</span>
               <button className="signInRegisterButton" onClick={() => {window.location.href = "http://localhost:3000/signUp"}}>
                 Create a new account
               </button>

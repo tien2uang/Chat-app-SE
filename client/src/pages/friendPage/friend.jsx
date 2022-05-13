@@ -1,6 +1,6 @@
-import Friends from "../friends/friends";
-import FriendViewer from "../friendViewer/friendViewer";
-import LeftBar from "../leftbar/leftBar";
+import Friends from "../../components/friends/friends";
+import FriendViewer from "../../components/friendViewer/friendViewer";
+import LeftBar from "../../components/leftbar/leftBar";
 import "./friend.css";
 
 export default function Friend() {
