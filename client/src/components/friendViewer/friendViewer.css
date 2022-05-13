@@ -47,3 +47,7 @@ img {
     color: black;
     cursor: pointer;
 }
+
+.friendViewer {
+    overflow-y: auto;
+}

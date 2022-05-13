@@ -5,9 +5,9 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-
     background-color:rgb(241, 241, 241);
     margin-top: 12px;
+    border-radius: 16px;
 }
 
 .conversationInfo  {
@@ -15,7 +15,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    border-radius: 16px;
 }
 
 
@@ -28,7 +28,7 @@
     height: 45px;
     border-radius: 50%;
     margin-right: 10px;
-    
+    margin-left: 10px;
 }
 
 .Info {
@@ -42,9 +42,10 @@
     font-size: 25px;
 }
 
-.message {
+.messageText {
     margin-top: 7px;
     margin-bottom: 0;
 }
+
 
 
