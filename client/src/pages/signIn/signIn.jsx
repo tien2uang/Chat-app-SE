@@ -1,13 +1,13 @@
 import "./signIn.css";
 import { loginCall } from "../../loginCall";
-import { useContext, useRef } from "react";
+import { useContext, useRef,useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 export default function SignIn() {
 
   const username= useRef();
   const password= useRef();
 
-  const {dispatch} =useContext(AuthContext);
+  const {error,dispatch} =useContext(AuthContext);
   const handleSubmit = (e)=>{
     e.preventDefault();
     const userCredentials= {username:username.current.value,password:password.current.value};
@@ -16,6 +16,9 @@ export default function SignIn() {
     console.log("click");
   };
 
+  useEffect(()=>{
+
+  },[error]);
 
   return (
     <div className="signIn">
@@ -35,6 +38,11 @@ export default function SignIn() {
                 className="signInInput"
                 ref={password}
               />
+              
+              <h3 style={{color: "red",display:"block" }}>
+                {error? "Sai tài khoản hoặc mật khẩu":"" }
+                
+              </h3>
               <button className="signInButton" type="submit" onClick={handleSubmit}>
                 Sign In
               </button>

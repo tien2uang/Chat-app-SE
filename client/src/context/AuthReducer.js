@@ -7,13 +7,13 @@ export const AuthReducer = (state, action) => {
                 error: false
             };
         case "LOGIN_SUCCESS":
-            console.log(action.payload + "sucuess");
+            console.log(action.payload + " success");
             return {
                 username: action.payload,
                 error: false
             };
         case "LOGIN_FAILURE":
-            console.log("fail" + action.payload);
+            console.log("fail " + action.payload);
             return {
                 username: null,
                 error: true

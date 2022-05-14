@@ -6,8 +6,12 @@ export const loginCall = async(userCredentials, dispatch) => {
 
         const res = await axios.post("/auth/log-in", userCredentials);
         console.log(res.data);
-        dispatch(LoginSuccess(res.data.username));
+        if (res.data.username !== undefined) {
+            dispatch(LoginSuccess(res.data.username));
+        } else {
+            dispatch(LoginFailure("Đăng nhập lỗi"));
+        }
     } catch (err) {
-        dispatch(LoginFailure());
+        console.log(err);
     }
 }

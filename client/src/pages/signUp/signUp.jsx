@@ -1,6 +1,20 @@
 import "./signUp.css";
+import { useContext, useRef,useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
+
 
 export default function SignUp() {
+
+
+  const userName=useRef();
+  const name= useRef();
+  const password=useRef();
+  const checkedPassword=useRef(); 
+
+  const handleSubmit=(e)=>{ 
+
+  }
   return (
     <div className="signUp">
       <div className="wrapper">
@@ -11,12 +25,13 @@ export default function SignUp() {
           </div>
           <div className="signUpRightWrapper">
           <form className="signUpBox">
-            <input placeholder="Username" required className="signUpInput" />
+            <input placeholder="Username" required className="signUpInput" ref={userName} />
             <input
-              placeholder="Email"
+              placeholder="Name"
               required
               className="signUpInput"
-              type="email"
+              type="text"
+              ref={name}
             />
             <input
               placeholder="Password"
@@ -24,14 +39,16 @@ export default function SignUp() {
               className="signUpInput"
               type="password"
               minLength="6"
+              ref={password}
             />
             <input
               placeholder="Password Again"
               required
               className="signUpInput"
               type="password"
+              ref={checkedPassword}
             />
-            <button className="signUpButton" type="submit">
+            <button className="signUpButton" type="submit" onClick={handleSubmit}>
               Sign Up
             </button>
             <span className="hadAccount">You had an account ?</span>
