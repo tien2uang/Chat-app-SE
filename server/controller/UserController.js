@@ -3,15 +3,15 @@ const User = require('../model/User');
 class UserController {
     async addUser(req, res) {
         const testData = {
-            username: "tq2002",
+            username: "myname_v2",
             name: "Quang",
             password: "12345",
             friends: ["Quna", "Yepp"]
         }
         const newUser = new User(testData);
         try {
-            let savedUser = newUser.save();
-            res.json(savedUser.data);
+            let savedUser = await newUser.save();
+            res.json(savedUser);
         } catch (err) {
             console.log(err);
         }
