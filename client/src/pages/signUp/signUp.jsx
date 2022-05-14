@@ -1,7 +1,7 @@
 import "./signUp.css";
 import { useContext, useRef,useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
+import axios from "axios";
 
 
 export default function SignUp() {
@@ -12,9 +12,22 @@ export default function SignUp() {
   const password=useRef();
   const checkedPassword=useRef(); 
 
-  const handleSubmit=(e)=>{ 
-
+  const handleSubmit=async (e)=>{ 
+    e.preventDefault();
+    const user = {
+      username: userName.current.value,
+      name: name.current.value,
+      password: password.current.value,
+      friends:[]
+    };
+    try {
+      const res= await axios.post("/auth/sign-up", user);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   }
+  
   return (
     <div className="signUp">
       <div className="wrapper">
