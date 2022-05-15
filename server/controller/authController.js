@@ -1,46 +1,73 @@
-const user = require('../model/User');
+const User = require('../model/User');
 
 
-const signup_post = (req, res) => {
+const signup_post = async(req, res) => {
     const username = req.body.username;
-    user.findOne({ username: username })
-        .then((oneuser) => {
-            if (oneuser !== null) {
-                res.json({ status: 'this username has already taken' })
-            } else {
-                const newUser = new user(req.body);
-                newUser.save()
-                    .then(() => res.json({ status: 'success sign up' }))
-                    .catch((err) => console.log(err))
-            }
-        })
-        .catch(err => console.log(err));
+    console.log(req.body);
+    // User.findOne({ username: username })
+    //     .then((oneuser) => {
+    //         if (oneuser !== null) {
+    //             res.json({ status: 'this username has already taken' })
+    //         } else {
+    //             console.log(req.body);
+    //             const newUser = new User(req.body);
+    //             newUser.save()
+    //                 .then(() => res.json({ status: 'success sign up' }))
+    //                 .catch((err) => console.log(err))
+    //         }
+    //     })
+    //     .catch(err => console.log(err));
+
+    try {
+        const user = await User.findOne({ username: username });
+        if (user !== null) {
+            res.json({ status: 'this username has already taken' })
+        } else {
+            console.log(req.body);
+            const newUser = new User(req.body);
+            newUser.save()
+                .then(() => res.json({ status: 'success sign up' }))
+                .catch((err) => console.log(err))
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
 }
 
-const login_post = (req, res) => {
-        const username = req.body.username;
+const login_post = async(req, res) => {
+    const username = req.body.username;
 
-        user.findOne({ username: username })
-            .then((oneuser) => {
-                if (oneuser !== null) {
-                    if (oneuser.password !== req.body.password) {
-                        res.json({ status: 'wrong password' })
-                    } else {
-                        res.json({ username: req.body.username })
-                    }
-                } else {
-                    res.json({ status: 'dont have this account' })
-                }
-            })
-            .catch(err => console.log(err));
+    // User.findOne({ username: username })
+    //     .then((oneuser) => {
+    //         if (oneuser !== null) {
+    //             if (oneuser.password !== req.body.password) {
+    //                 res.json({ status: 'wrong password' })
+    //             } else {
+    //                 res.json({ username: req.body.username })
+    //             }
+    //         } else {
+    //             res.json({ status: 'dont have this account' })
+    //         }
+    //     })
+    //     .catch(err => console.log(err));
+
+    try {
+        const user = await User.findOne({ username: username });
+        if (user !== null) {
+            if (user.password !== req.body.password) {
+                res.json({ status: 'wrong password' })
+            } else {
+                res.json(user);
+            }
+        } else {
+            res.json({ status: 'dont have this account' })
+        }
+    } catch (err) {
+        console.log(err);
     }
-    // const login_index = (req, res) => {
-    //     res.render('log-in', { anoucement: 'log-in' });
-    // }
+}
 
-// const signup_index = (req, res) => {
-//     res.render('sign-up', { anoucement: 'sign-up' });
-// }
 module.exports = {
     signup_post,
     login_post
