@@ -1,20 +1,62 @@
 import "./signUp.css";
-import { useContext, useRef,useEffect } from "react";
+import { useContext, useRef,useEffect,useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
+import axios from "axios";
+import { useNavigate } from "react-router";
+import {SignUpFailure,SignUpStart,SignUpSuccess} from "../../context/AuthAction"
 
 
 export default function SignUp() {
 
-
+  const navigate = useNavigate();
   const userName=useRef();
   const name= useRef();
   const password=useRef();
   const checkedPassword=useRef(); 
+  const [repeatPasswordCheck,setRepeatPasswordCheck]= useState(true);
+  const {error,dispatch}=useContext(AuthContext);
 
-  const handleSubmit=(e)=>{ 
+  const handleSubmit=async (e)=>{ 
+    e.preventDefault();
+    const user = {
+      username: userName.current.value,
+      name: name.current.value,
+      password: password.current.value,
+      friends:[]
+    };
 
+    if(password.current.value===checkedPassword.current.value){
+      setRepeatPasswordCheck(true);
+      dispatch(SignUpStart());
+      try {
+        const res= await axios.post("/auth/sign-up", user);
+        console.log(res.data.status);
+        if(res.data.status==='success sign up'){
+          dispatch(SignUpSuccess());
+          console.log("Đăng ksi thành công");
+          navigate('/signIn');
+        }
+        else{ 
+          dispatch(SignUpFailure("Đăng kí thất bại"));
+        }
+
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    else{
+      setRepeatPasswordCheck(false);
+    }
+    
   }
+
+  const handeFocus =()=>{
+    setRepeatPasswordCheck(true);
+    dispatch(SignUpStart());
+    console.log("focus");
+  }
+  
   return (
     <div className="signUp">
       <div className="wrapper">
@@ -25,13 +67,14 @@ export default function SignUp() {
           </div>
           <div className="signUpRightWrapper">
           <form className="signUpBox">
-            <input placeholder="Username" required className="signUpInput" ref={userName} />
+            <input placeholder="Username" required className="signUpInput" ref={userName} onFocus={handeFocus} />
             <input
               placeholder="Name"
               required
               className="signUpInput"
               type="text"
               ref={name}
+              onFocus={handeFocus}
             />
             <input
               placeholder="Password"
@@ -40,6 +83,7 @@ export default function SignUp() {
               type="password"
               minLength="6"
               ref={password}
+              onFocus={handeFocus}
             />
             <input
               placeholder="Password Again"
@@ -47,7 +91,10 @@ export default function SignUp() {
               className="signUpInput"
               type="password"
               ref={checkedPassword}
+              onFocus={handeFocus}
             />
+            <h3 style={!repeatPasswordCheck ? {color: 'red'}: {display: 'none'}}>Please confirm your password</h3>
+            <h3 style={error ? {color: 'red'}: {display: 'none'}}>Username already in use</h3>
             <button className="signUpButton" type="submit" onClick={handleSubmit}>
               Sign Up
             </button>
