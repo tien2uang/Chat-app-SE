@@ -11,7 +11,7 @@ export default function Profile() {
 
   return (
     <>
-      <button class="tab__1__list-items" title="Thông tin" onClick={toggleModal}>
+      <button className="tab__1__list-items" title="Thông tin" onClick={toggleModal}>
         <FaUserCircle className="items" />
       </button>
       {modal && (

@@ -3,34 +3,34 @@ export const AuthReducer = (state, action) => {
     switch (action.type) {
         case "LOGIN_START":
             return {
-                username: null,
+                user: null,
                 error: false
             };
         case "LOGIN_SUCCESS":
             console.log(action.payload + " success");
             return {
-                username: action.payload,
+                user: action.payload,
                 error: false
             };
         case "LOGIN_FAILURE":
             console.log("fail " + action.payload);
             return {
-                username: null,
+                user: null,
                 error: true
             };
         case "SIGNUP_START":
             return {
-                username: null,
+                user: null,
                 error: false
             };
         case "SIGNUP_SUCCESS":
             return {
-                username: null,
+                user: null,
                 error: false
             };
         case "SIGNUP_FAILURE":
             return {
-                username: null,
+                user: null,
                 error: true
             };
         default:

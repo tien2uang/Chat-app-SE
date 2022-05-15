@@ -22,7 +22,9 @@ export default function SignUp() {
       username: userName.current.value,
       name: name.current.value,
       password: password.current.value,
-      friends:[]
+      friends:[],
+      avatarURL:""
+
     };
 
     if(password.current.value===checkedPassword.current.value){
@@ -54,7 +56,7 @@ export default function SignUp() {
   const handeFocus =()=>{
     setRepeatPasswordCheck(true);
     dispatch(SignUpStart());
-    console.log("focus");
+    
   }
   
   return (

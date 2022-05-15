@@ -6,7 +6,7 @@ import Message from "../message/message";
 
 export default function Messenger() {
   return (
-    <div class="tab__3">
+    <div className="tab__3">
       <div className="chat_header">
         <div className="user">
           <div className="user_avatar">

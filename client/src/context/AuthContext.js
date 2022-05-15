@@ -4,7 +4,7 @@ import {AuthReducer } from "./AuthReducer";
  
 
  const INITIAL_STATE = {
-     username: JSON.parse(localStorage.getItem("user")) || null,
+     user: JSON.parse(localStorage.getItem("user")) || null,
      error: false
  };
 
@@ -15,13 +15,13 @@ import {AuthReducer } from "./AuthReducer";
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
     
     useEffect(()=>{
-      localStorage.setItem("user", JSON.stringify(state.username))
-    },[state.username])
+      localStorage.setItem("user", JSON.stringify(state.user))
+    },[state.user])
     
     return (
       <AuthContext.Provider
         value={{
-          username: state.username,
+          user: state.user,
           error: state.error,
           dispatch,
         }}

@@ -13,14 +13,14 @@ import { AuthContext } from './context/AuthContext';
 
 
 function App() {
-  const { username } = useContext(AuthContext); 
+  const { user } = useContext(AuthContext); 
   return (
      <Router>
        <Routes>
-         <Route path = "/" element = { username ? <Home /> : <SignIn />} />
-         <Route path = "/signIn" element = { username ? <Navigate  to = "/" /> : <SignIn />} />
-         <Route path = "/signUp" element = { username ? <Navigate  to = "/" /> : <SignUp />} />
-         <Route path = "/friend" element = { !username ? <Navigate  to = "/" /> : <Friend />} />
+         <Route path = "/" element = { user ? <Home /> : <SignIn />} />
+         <Route path = "/signIn" element = { user ? <Navigate  to = "/" /> : <SignIn />} />
+         <Route path = "/signUp" element = { user ? <Navigate  to = "/" /> : <SignUp />} />
+         <Route path = "/friend" element = { !user? <Navigate  to = "/" /> : <Friend />} />
        </Routes>
      </Router>
     // <Router>
