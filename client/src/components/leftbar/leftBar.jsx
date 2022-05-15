@@ -14,7 +14,10 @@ export default function LeftBar() {
           <FaUserFriends className="items" />
         </button>
         <Profile />
-        <button className="tab__1__list-items" title="Thoát" onClick={() => {window.location.href = "http://localhost:3000/signIn"}}>
+        <button class="tab__1__list-items" title="Thoát" onClick={() => {
+           localStorage.clear()
+           window.location.href = "http://localhost:3000/signIn"
+          }}>
           <FaSignOutAlt className="items" />
         </button>
       </div>
