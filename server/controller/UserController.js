@@ -26,6 +26,17 @@ class UserController {
             console.log(err);
         }
     }
+    async updateUserInfomation(req, res) {
+        const id = req.params.id;
+        try {
+            const filter = { _id: id };
+            const update = req.body;
+            const userInfomation = await User.findByIdAndUpdate(id, update);
+            res.json(userInfomation);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     async getFriends(req, res) {
         const id = req.params.id;
