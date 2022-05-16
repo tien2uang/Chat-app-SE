@@ -18,10 +18,10 @@ class UserController {
     }
 
     async getUserInfomation(req, res) {
-        const id = req.params.id;
+        const id = req.params.id; // id
         try {
-            const userInfomation = await User.findById(id);
-            res.json(userInfomation);
+            const userInfomation = await User.findById(id); //tim trong data base
+            res.json(userInfomation); // tra ve info
         } catch (err) {
             console.log(err);
         }
@@ -41,7 +41,7 @@ class UserController {
             const friendsList = [];
             friends.map((friend) => {
                 let temp = {
-                    id: friend.id,
+                    id: friend._id,
                     name: friend.name
                 };
                 friendsList.push(temp)

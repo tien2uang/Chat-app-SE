@@ -16,7 +16,9 @@ mongoose.connect(dbURI)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.post("/", (req, res) => {
+    res.send("tienquang");
+})
 
 
 app.use("/api/conversations", conversationRouter);

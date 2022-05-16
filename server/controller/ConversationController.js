@@ -4,7 +4,7 @@ class ConversationController {
 
     async newConv(req, res) {
 
-            const testData = { members: ["ti", "tienquangqqq"] };
+            const testData = { members: ["6280c85a5f029943b9a91923", "6280dc0cf3c926431b373e7d"] };
             const newTestConversation = new Conversation(testData);
             const newConversation = new Conversation({
                 members: [req.body.senderId, req.body.receiverId],
@@ -24,8 +24,8 @@ class ConversationController {
     async getConv1(req, res) {
             try {
                 const conversation = await Conversation.find({
-                    // members: { $in: [req.params.userId] },
-                    members: { $in: ["tienquangqqq"] },
+                    members: { $in: [req.params.userId] },
+
                 });
                 res.status(200).json(conversation);
             } catch (err) {
