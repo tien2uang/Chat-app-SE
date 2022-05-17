@@ -14,7 +14,7 @@ export default function LeftBar() {
           <FaUserFriends className="items" />
         </button>
         <Profile />
-        <button class="tab__1__list-items" title="Thoát" onClick={() => {
+        <button className="tab__1__list-items" title="Thoát" onClick={() => {
            localStorage.clear()
            window.location.href = "http://localhost:3000/signIn"
           }}>
