@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import "./Conversation.css";
+<<<<<<< HEAD
 import { useEffect,useContext,useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Pusher from 'pusher-js';
@@ -60,6 +62,29 @@ export default function Conversation({conversation}) {
       channel.unsubscribe();
     }
   },[lastMessage]);
+=======
+import axios from "axios";
+
+export default function Conversation({friendId}) {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getFriendInfo = async () => {
+      try {
+        const res = await axios.get("/users/" + friendId)
+        setUser(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getFriendInfo();
+  })
+
+  
+
+
+>>>>>>> 3d5b275394afd45b1a0ef6ec36e053ce3ad5992a
 
   return (
     <div className="conversation">
@@ -70,9 +95,14 @@ export default function Conversation({conversation}) {
           alt=""
         />
         <div className="Info">
+<<<<<<< HEAD
           <h1 className="room">{conversationName}</h1>
           
           <p className="messageText" >{lastMessage}</p>
+=======
+          <h1 className="room">{user?.name}</h1>
+          <p className="messageText">This is the last message</p>
+>>>>>>> 3d5b275394afd45b1a0ef6ec36e053ce3ad5992a
         </div>
         </div>
     </div>
