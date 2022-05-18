@@ -6,6 +6,7 @@ import Profile from "../../pages/profile/profile";
 export default function LeftBar() {
   return (
     <div className="tab__1">
+      <Profile />
       <div className="tab__1__list">
         <button className="tab__1__list-items" title="Tin nhắn" onClick={() => {window.location.href = "http://localhost:3000"}}>
           <BsFillChatFill className="items" />
@@ -13,8 +14,7 @@ export default function LeftBar() {
         <button className="tab__1__list-items" title="Bạn bè" onClick={() => {window.location.href = "http://localhost:3000/friend"}}>
           <FaUserFriends className="items" />
         </button>
-        <Profile />
-        <button class="tab__1__list-items" title="Thoát" onClick={() => {
+        <button className="tab__1__list-items" title="Thoát" onClick={() => {
            localStorage.clear()
            window.location.href = "http://localhost:3000/signIn"
           }}>
