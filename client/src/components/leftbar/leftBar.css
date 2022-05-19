@@ -2,12 +2,16 @@
     width: 100px;
     
     background-color: gray; 
-    padding-top: 70px;
+    
 }
 
 
 .tab__1 a{
     color: black;
+}
+
+.tab__1__list {
+    padding-top: 50px;
 }
 
 .tab__1__list-items {

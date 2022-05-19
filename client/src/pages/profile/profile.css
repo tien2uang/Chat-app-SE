@@ -59,3 +59,80 @@ body.active-modal {
     border: 0 1px solid;
     color: #0091ff;
 }
+
+.profilePicture {
+    width: 40px;
+    height: 40px;
+}
+
+.profilePicturePop {
+    width: 100px;
+    height: 100px;
+}
+
+.profilePictureWrapper {
+    padding-top: 30px;
+    text-align: center;
+}
+
+.editButtonWrapper {
+    text-align: center;
+}
+
+.editButton {
+    border: none;
+    font-size: 1.17em;
+    font-weight: bold;
+}
+
+.editButton:hover {
+    color: #0091ff;
+    cursor: pointer;
+}
+
+.saveWrapper {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.saveButton {
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 1.17em;
+    font-weight: bold;
+}
+
+.saveButton:hover {
+    color: #0091ff;
+    cursor: pointer;
+}
+
+.inputFile {
+    display: none;
+}
+
+.inputfile {
+    cursor: pointer;
+}
+
+.iconInput {
+    margin-left: -23px;
+    margin-bottom: -3px;
+}
+
+.editField {
+    display: flex;
+    font-size: 1.17em;
+    font-weight: bold;
+    padding-bottom: 20px; 
+}
+
+.field {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px 0 5px 5px;
+}
+
+.inputFieldName {
+    padding-top: 3px;
+}
