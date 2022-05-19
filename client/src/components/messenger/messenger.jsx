@@ -18,7 +18,7 @@ export default function Messenger() {
   const [messages,setMessages]= useState([]);
   const [inputText,setInputText]= useState("");
   const scrollRef = useRef();
-  var userConversations= [];
+  
   
 
   const sendMessage = async (e)=>{
@@ -46,7 +46,7 @@ export default function Messenger() {
     try {
       console.log(user.username);
       const res = await axios.get("/conversations/" + user.username);
-      userConversations=res.data;
+      const userConversations=res.data;
       const filteredConversations = userConversations.filter(conversation =>{
         const members = conversation.members;
         const filteredMembers = members.filter(member =>member.includes(e.target.value)&&member!==user.username);
@@ -68,8 +68,7 @@ export default function Messenger() {
       try {
         console.log(user.username);
         const res = await axios.get("/conversations/" + user.username);
-        userConversations=res.data;
-        console.log(userConversations);
+        
         setConversations(res.data);
       } catch (err) {
         console.log(err);
@@ -100,6 +99,32 @@ export default function Messenger() {
       channel.unsubscribe();
     }
   },[messages]);
+
+  useEffect(()=>{
+    const pusher = new Pusher('64873375849c544489d1', {
+      cluster: 'ap1'
+    });
+
+    const channel = pusher.subscribe('conversation');
+    channel.bind('insert', function(data) {
+      
+
+      const newConversation =data.conversation;
+      if(newConversation.members.includes(user.username)){
+        setConversations([...conversations,data.conversation]);
+
+      }
+      
+      
+     
+      
+    });
+
+    return ()=>{
+      channel.unbind('insert');
+      channel.unsubscribe();
+    }
+  },[conversations]);
 
   useEffect(()=>{
   
