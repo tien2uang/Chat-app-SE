@@ -30,8 +30,7 @@ export default function Profile() {
       // console.log(res.data); 
       const res1 = await axios.get("/users/" + user._id, user); 
       setUserFromDatabase(res1.data);
-      setState(!state); 
-      setModal(!modal);  
+      setState(!state);
     } catch(err) {
       console.log(err);
     }
@@ -43,7 +42,6 @@ export default function Profile() {
   };
 
   const toggleState = () => {
-    setModal(!modal);
     setState(!state);
   };
 
