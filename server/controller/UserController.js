@@ -71,6 +71,25 @@ class UserController {
     async delelteFriend(req, res) {
 
     }
+    async getUserByUsername(req, res) {
+        const username = req.params.username;
+        try {
+            const userInfomation = await User.findOne({ username: username }); //tim trong data base
+            res.json(userInfomation); // tra ve info
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    async getFriendsSuggestion(req, res) {
+        const id = req.params.id; // id
+        try {
+            const userInfomation = await User.findById(id); //tim trong data base
+            const friendsSuggestion = await User.find({ _id: { $nin: userInfomation.friends }, _id: { $ne: id } });
+            res.json(friendsSuggestion); // tra ve info
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 module.exports = new UserController;
