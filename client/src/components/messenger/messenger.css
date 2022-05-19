@@ -15,11 +15,6 @@
     padding: 10px;
 }
 
-.friendChatMenu {
-    width: 90%;
-    padding: 10px;
-    margin-left: 0;
-}
 
 .conversations {
     overflow-y: auto;
@@ -113,3 +108,94 @@ input {
 .send_icon :hover {
     color: aqua;
 }
+
+
+.friendSearchField {
+    width: 80%;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.searchFriendBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addConversationButton {
+    border: none;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: grey;
+    background-color: rgb(241, 241, 241);
+}
+
+.addConversationButton:hover {
+    cursor: pointer;
+    background-color: rgb(226, 226, 226);
+}
+
+
+.textMessage {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: rgb(233, 223, 223);
+    margin: 0;
+}
+
+.friendSearchForAdd {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: rgb(233, 223, 223);
+    margin: 0;
+}
+
+
+.listFriends {
+    border: 1px solid black;
+    height: 200px;
+    border-radius: 12px;
+    overflow-y:auto;
+}
+
+.addConverField {
+    padding: 10px 0 10px 0;
+}
+
+.saveAddConver {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: gray;
+    color: white;
+    border-radius: 5px;
+}
+
+.closeAddConver {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+    background-color: gray;
+    color: white;
+    border-radius: 5px;
+}
+
+.saveAddConver:hover{
+    cursor: pointer;
+    background-color: rgb(90, 76, 76);
+}
+
+.closeAddConver:hover {
+    cursor: pointer;
+    background-color: rgb(90, 76, 76);
+}
+
