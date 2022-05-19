@@ -4,10 +4,10 @@ class ConversationController {
 
     async newConv(req, res) {
 
-            const testData = { members: ["6280c85a5f029943b9a91923", "6280dc0cf3c926431b373e7d"] };
+            const testData = { members: ["tienquang", "quyet"] };
             const newTestConversation = new Conversation(testData);
             const newConversation = new Conversation({
-                members: [req.body.senderId, req.body.receiverId],
+                members: [req.body.senderUserName, req.body.receiverUserName],
             });
 
             try {
@@ -23,8 +23,9 @@ class ConversationController {
         //get conv of a user
     async getConv1(req, res) {
             try {
+                console.log(req.params.userName, " username data");
                 const conversation = await Conversation.find({
-                    members: { $in: [req.params.userId] },
+                    members: { $in: [req.params.userName] },
 
                 });
                 res.status(200).json(conversation);
@@ -36,7 +37,7 @@ class ConversationController {
     async getConv2(req, res) {
         try {
             const conversation = await Conversation.findOne({
-                members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+                members: { $all: [req.params.firstUserName, req.params.secondUserName] },
             });
             res.status(200).json(conversation)
         } catch (err) {
