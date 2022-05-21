@@ -3,11 +3,12 @@ class MessageController {
 
     async add(req, res) {
         const newMessage = new Message(req.body);
-        console.log(req.body);
+
+
 
         try {
             const savedMessage = await newMessage.save();
-            res.status(200).json(savedMessage);
+            res.status(201).json(savedMessage);
             // const savedTestMessage = await testMessage.save();
             // res.status(200).json(savedTestMessage);
         } catch (err) {

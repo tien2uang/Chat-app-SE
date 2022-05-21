@@ -44,6 +44,10 @@ db.once("open", () => {
     })
     conversationChangeStream.on('change', (changes) => {
         console.log("conversation change");
+        if (changes.operationType == "insert") {
+            const conversationDetails = changes.fullDocument;
+            pusher.trigger("conversation", "insert", { conversation: conversationDetails });
+        }
     })
 });
 

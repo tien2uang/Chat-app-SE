@@ -1,20 +1,25 @@
 const Conversation = require('../model/Conversation')
-
+const Message = require('../model/Message')
 class ConversationController {
 
     async newConv(req, res) {
 
-            const testData = { members: ["tienquang", "quyet"] };
-            const newTestConversation = new Conversation(testData);
-            const newConversation = new Conversation({
-                members: [req.body.senderUserName, req.body.receiverUserName],
-            });
 
+            console.log(req.body);
             try {
-                // const savedConversation = await newConversation.save();
-                // res.status(200).json(savedConversation);
-                const testConversation = await newTestConversation.save();
-                res.status(200).json(testConversation);
+                const data = req.body;
+                const newConversation = new Conversation({ members: data.members });
+                const savedConversation = await newConversation.save();
+                console.log(savedConversation);
+                const newMessage = new Message({
+                    conversationId: savedConversation._id,
+                    sender: data.sender,
+                    text: data.text
+                });
+                const savedMessage = await newMessage.save();
+                
+                res.status(201).json(savedConversation);
+
             } catch (err) {
                 res.status(500).json(err);
             }
@@ -23,7 +28,7 @@ class ConversationController {
         //get conv of a user
     async getConv1(req, res) {
             try {
-                console.log(req.params.userName, " username data");
+
                 const conversation = await Conversation.find({
                     members: { $in: [req.params.userName] },
 

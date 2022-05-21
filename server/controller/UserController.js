@@ -53,7 +53,8 @@ class UserController {
             friends.map((friend) => {
                 let temp = {
                     id: friend._id,
-                    name: friend.name
+                    name: friend.name,
+                    username: friend.username
                 };
                 friendsList.push(temp)
             });
@@ -80,6 +81,7 @@ class UserController {
             console.log(err);
         }
     }
+
     async getFriendsSuggestion(req, res) {
         const id = req.params.id; // id
         try {
