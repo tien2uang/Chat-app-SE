@@ -79,13 +79,13 @@ export default function Conversation({conversation,currentChat}) {
   return (
     <div className="conversation">
         <div className="conversationInfo">
-        <img
+        <img 
           className="conversationImg"
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
           alt=""
         />
         <div className="Info">
-          <h1 className="room">{conversationName}</h1>
+          <h5 className="room">{conversationName}</h5>
           
           <p className="messageText" >{lastMessage}</p>
         </div>
