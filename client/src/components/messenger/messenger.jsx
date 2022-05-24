@@ -22,7 +22,7 @@ export default function Messenger() {
   const [friendsDontHaveConversation,setFriendsDontHaveConversation] = useState([]);
   const [friendUserName,setFriendUserName] = useState('');
 
-  console.log(currentChat)
+  
   
   const addConversation= async (e)=>{ 
 
@@ -276,18 +276,22 @@ export default function Messenger() {
     <>
       <div className="tab__2">
         <div className="tab__2__wrapper">
+          <div className="addConversationBar">
+            <h4>Chats</h4>
+            <button
+              className="addConversationButton"
+              onClick={() => setAddConver(!addConver)}
+            >
+              <AiOutlinePlus className="addConversationIcon"/>
+            </button>
+          </div>
           <div className="searchFriendBar">
             <input
               placeholder="Search for your conversation"
               className="friendSearchField"
               onChange={search}
             />
-            <button
-              className="addConversationButton"
-              onClick={() => setAddConver(!addConver)}
-            >
-              <AiOutlinePlus />
-            </button>
+
             {addConver && (
               <div className="modal">
                 <div
@@ -345,17 +349,24 @@ export default function Messenger() {
               </div>
             )}
           </div>
-          <div className="conversations">
+
+          <div className="conversations-wrapper">
+            <h5>Conversations</h5>
+            <div className="conversations">
             {conversations.map((c) => (
               <div onClick={() => {setCurrentChat(c)}} key={c._id}>
                 <Conversation conversation={c} currentChat={currentChat} />
               </div>
             ))}
+            </div>
           </div>
+          
         </div>
       </div>
-
+      
       <div className="tab__3">
+        {currentChat!= null ? (
+      <>
         <div className="chat_header">
           <div className="user">
             <div className="user_avatar">
@@ -365,31 +376,22 @@ export default function Messenger() {
                 alt=""
               />
             </div>
-            {currentChat == null ? (
-              <div className="user_name">
-                <h2 className="user_name">Khong co conversation</h2>
-              </div>
-            ) : (
-              <div className="user_name">
-                <h2 className="user_name">{currentChatName}</h2>
-              </div>
-            )}
+           
+            <div className="user_name">
+                <h5 className="user_name">{currentChatName}</h5>
+            </div>
+            
           </div>
         </div>
-
-        {currentChat != null ? (
-          <div className="chat_masseages">
+        
+        <div className="chat_masseages">
             {messages.map((m, index) => (
               <div ref={scrollRef} key={m._id}>
                 <Message message={m} own={m.sender === user._id} />
               </div>
             ))}
-          </div>
-        ) : (
-          <div className="chat_masseages">
-            <h1>Khong co cuoc hoi thoai</h1>
-          </div>
-        )}
+        </div>
+        
 
         <div className="chat_input">
           <form action="">
@@ -413,6 +415,9 @@ export default function Messenger() {
             </button>
           </form>
         </div>
+      </>):(
+          <div><h1>Khong co tin nhan</h1></div>
+        )}
       </div>
     </>
   );

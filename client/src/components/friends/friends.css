@@ -1,21 +1,15 @@
 .tab__2 {
-    width: 350px;
-    background-color: #fff;
+    width: 380px;
     border-top-width: 0px;
-    border-right: 1px;
     border-bottom-width: 0;
-    border-left: 1px;
-    border-style: solid; 
-    border-color: rgb(192, 190, 190);
+    background-color: #f5f7fb;
 }
 
-.tab__2__wrapper {
-    padding: 10px;
-}
+.tab__2__wrapper {}
 
 .friendChatMenu {
     width: 90%;
-    padding: 10px; 
+    padding: 10px;
     margin-left: 0;
 }
 
@@ -23,4 +17,3 @@
     overflow-y: auto;
     padding-right: 10px;
 }
-

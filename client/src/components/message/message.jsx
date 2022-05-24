@@ -3,7 +3,7 @@ import {format} from "timeago.js"
 export default function Message({message,own}) {
     return (
         <div className= {own ? "message recievingMessage" : "message"}>
-            <div className="messageTop">
+            <div className= {own ? "messageTop" : "messageTop receivingMessage"}>
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" 
                 alt="This is image message" 
                 className="messageImg" />
