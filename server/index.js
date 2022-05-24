@@ -6,6 +6,7 @@ const messageRouter = require("./routers/messages");
 const conversationRouter = require("./routers/conversations");
 const authRouter = require('./routers/authRoutes');
 const userRouter = require('./routers/user');
+const invitationRouter = require('./routers/invitations');
 const Pusher = require("pusher");
 
 const dbURI = 'mongodb+srv://hfghfg123456:hfghfg123456@profile.hxemy.mongodb.net/Database?retryWrites=true&w=majority';
@@ -70,6 +71,7 @@ app.use("/api/conversations", conversationRouter);
 app.use("/api/messages", messageRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/invitations", invitationRouter);
 app.listen(8800, () => {
     console.log("Backend server is running!");
 });
