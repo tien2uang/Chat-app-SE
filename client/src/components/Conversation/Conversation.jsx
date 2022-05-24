@@ -2,13 +2,26 @@
 import "./Conversation.css";
 import { useEffect,useContext,useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+
+import { FiXCircle } from "react-icons/fi";
 import Pusher from 'pusher-js';
 import axios from 'axios';
-export default function Conversation({conversation}) {
+export default function Conversation({conversation,currentChat}) {
   const [lastMessage,setLastMessage]= useState("");
   const [conversationName,setConversationName]= useState("");
   const {user}= useContext(AuthContext);
 
+  const deleteConversation = async (e)=>{
+    console.log("conversation"+ currentChat)
+    e.preventDefault();
+    try {
+      const res= axios.delete("/conversations/delete/"+conversation._id);
+    }
+    catch (e) {
+      console.log(e);
+    }
+
+  }
 
   useEffect(()=>{
     const getLastMessage= async ()=>{
@@ -27,6 +40,7 @@ export default function Conversation({conversation}) {
 
   useEffect( ()=>{
     const guestUserName = conversation.members.find(member=>member !==user.username);
+   
     const getConversationName= async ()=>{
       try{
           const res= await axios.get("/users/username/"+guestUserName);
@@ -76,6 +90,12 @@ export default function Conversation({conversation}) {
           <p className="messageText" >{lastMessage}</p>
         </div>
         </div>
+        {/* <div className="delete-conversation">
+          <button onClick={deleteConversation}>
+            <FiXCircle/>
+            
+          </button>
+        </div> */}
     </div>
   );
 }

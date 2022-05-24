@@ -22,8 +22,7 @@ export default function Messenger() {
   const [friendsDontHaveConversation,setFriendsDontHaveConversation] = useState([]);
   const [friendUserName,setFriendUserName] = useState('');
 
-
-
+  console.log(currentChat)
   
   const addConversation= async (e)=>{ 
 
@@ -54,25 +53,30 @@ export default function Messenger() {
       const userConversations=res.data; 
       const friendsResponse = await axios.get("/users/" + user._id+"/friends");
       const friends=friendsResponse.data;
+     
       
       
 
       const hasntConversationFriends= friends.filter(friend=>{
         const checkForHasntConversation=true;
         const userName = friend.username;
-        if(!userName.includes(e.target.value))
+        if(!userName.includes(e.target.value) ||e.target.value == "")
         {
           return false;
         }
         else{
-          userConversations.forEach(conversation=>{
-            conversation.members.forEach(member=>{
-              if(member.include(e.target.value)&& member!=user.username) {
-                    checkForHasntConversation=false;
-                    return checkForHasntConversation;
-              }
+          if(userConversations.length>0){
+            userConversations.forEach(conversation=>{
+              conversation.members.forEach(member=>{
+                if(member.includes(e.target.value)&& member!=user.username) {
+                      checkForHasntConversation=false;
+                      return checkForHasntConversation;
+                }
+              })
             })
-          })
+          } else { 
+            return true;
+          }
         }
       
 
@@ -128,14 +132,10 @@ export default function Messenger() {
     }
   };
 
-  const setFriendsSeachInput=(e)=>{
-    console.log("click");
-  }
-
+  
   useEffect(() => {
     const getConversations = async () => {
       try {
-        console.log(user.username);
         const res = await axios.get("/conversations/" + user.username);
         
         setConversations(res.data);
@@ -147,6 +147,7 @@ export default function Messenger() {
   }, [user._id]);
 
   useEffect(() => {
+    
     const pusher = new Pusher("64873375849c544489d1", {
       cluster: "ap1",
     });
@@ -154,7 +155,7 @@ export default function Messenger() {
     const channel = pusher.subscribe("message");
     channel.bind("insert", function (data) {
       const newMessage = data.message;
-      if (newMessage.conversationId == currentChat._id) {
+      if (newMessage.conversationId == currentChat?._id) {
         setMessages([...messages, data.message]);
       }
     });
@@ -177,13 +178,61 @@ export default function Messenger() {
       const newConversation =data.conversation;
       if(newConversation.members.includes(user.username)){
         setConversations([...conversations,data.conversation]);
-
+        setCurrentChat(data.conversation);  
+        
       }
       
     });
 
+   
+
     return ()=>{
       channel.unbind('insert');
+     
+      channel.unsubscribe();
+    }
+  },[conversations]);
+
+  useEffect(()=>{
+    const pusher = new Pusher('64873375849c544489d1', {
+      cluster: 'ap1'
+    });
+
+    const channel = pusher.subscribe('conversation');
+    channel.bind('delete', function(data){
+      
+      console.log(currentChat)
+      const deleteConversation =data.conversation;
+      console.log(deleteConversation);
+      const getConversations = async () => {
+        try {
+          
+          if (deleteConversation.members.includes(user.username)) {
+            console.log("true")
+            console.log(currentChat)
+            if(currentChat!=null){
+              console.log("currentChat khac null")
+              console.log(deleteConversation._id," ",currentChat._id)
+              if(deleteConversation._id==currentChat._id ){
+                setCurrentChat(null);
+                
+              }
+            }
+            
+            const res = await axios.get("/conversations/" + user.username);
+
+            setConversations(res.data);
+            
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getConversations();
+
+    })
+    return ()=>{
+      channel.unbind("delete");
       channel.unsubscribe();
     }
   },[conversations]);
@@ -256,13 +305,21 @@ export default function Messenger() {
                       />
                     </div>
                     <div className="listFriends">
-                      {friendsDontHaveConversation.map((friend) =>(
-                        <div onClick={(e)=>{setFriendUserName(friend.name)}} key={friend.id}>
-                            <h3>{friend.name}</h3>
-                        </div>
+                      {friendsDontHaveConversation.length>0 ? (
+                        friendsDontHaveConversation.map((friend) =>(
+                          <div onClick={(e)=>{setFriendUserName(friend.username)}} key={friend.id}>
+                              <h3>{friend.name} @{friend.username}</h3>
+                          </div>
+                        )
+                         
+                        )
                       )
-                       
-                      )}
+                      : (
+                        <h3>Không có kết quả</h3>
+                      )
+
+                    
+                      }
                     </div>
                     <div className="addConverField">
                       <input value={newConversationInputText}
@@ -290,8 +347,8 @@ export default function Messenger() {
           </div>
           <div className="conversations">
             {conversations.map((c) => (
-              <div onClick={() => setCurrentChat(c)} key={c._id}>
-                <Conversation conversation={c} />
+              <div onClick={() => {setCurrentChat(c)}} key={c._id}>
+                <Conversation conversation={c} currentChat={currentChat} />
               </div>
             ))}
           </div>
