@@ -12,6 +12,12 @@ export const AuthReducer = (state, action) => {
                 user: action.payload,
                 error: false
             };
+        case "UPDATE_SUCESS":
+            console.log(action.payload + " success");
+            return {
+                user: action.payload,
+                error: false
+            };
         case "LOGIN_FAILURE":
             console.log("fail " + action.payload);
             return {

@@ -193,6 +193,7 @@ export default function Messenger() {
     }
   },[conversations]);
 
+  //chuc nang xóa nhưng mà bỏ
   useEffect(()=>{
     const pusher = new Pusher('64873375849c544489d1', {
       cluster: 'ap1'
@@ -266,7 +267,7 @@ export default function Messenger() {
     };
     getConversationName();
     getMessages();
-  }, [currentChat]);
+  }, [currentChat,user]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -387,7 +388,7 @@ export default function Messenger() {
         <div className="chat_masseages">
             {messages.map((m, index) => (
               <div ref={scrollRef} key={m._id}>
-                <Message message={m} own={m.sender === user._id} />
+                <Message message={m} own={m.sender === user._id} sender={m.sender} />
               </div>
             ))}
         </div>
