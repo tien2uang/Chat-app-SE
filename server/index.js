@@ -27,9 +27,10 @@ db.once("open", () => {
     const messageCollection = db.collection('messages');
     const userCollection = db.collection('users');
     const conversationCollection = db.collection('conversations');
-
+    const invitationCollection = db.collection('invitations');
     const messageChangeStream = messageCollection.watch();
     const userChangeStream = userCollection.watch();
+    const invitationChangeStream = invitationCollection.watch();
     const conversationChangeStream = conversationCollection.watch({ fullDocument: "updateLookup" });
 
     messageChangeStream.on('change', (changes) => {
@@ -59,6 +60,17 @@ db.once("open", () => {
             console.log(conversationDetails);
             pusher.trigger("conversation", "delete", { conversation: conversationDetails });
         }
+    })
+    invitationChangeStream.on('change', (changes) => {
+        console.log("invitation change");
+        if (changes.operationType == "insert") {
+            let invitationDetails = changes.fullDocument;
+            pusher.trigger("invitation", "insert", { invitation: invitationDetails });
+        }
+        if (changes.operationType == "delete") {
+            pusher.trigger("invitation", "delete", { invitation: "xoa invitation" });
+        }
+
     })
 });
 
