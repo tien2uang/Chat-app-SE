@@ -44,6 +44,7 @@ class UserController {
 
         try {
             const userInfomation = await User.findById(id);
+            console.log(userInfomation)
             const friends = await Promise.all(
                 userInfomation.friends.map(friendId => {
                     return User.findById(friendId);

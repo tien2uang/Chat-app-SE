@@ -29,14 +29,17 @@ db.once("open", () => {
 
     const messageChangeStream = messageCollection.watch();
     const userChangeStream = userCollection.watch();
-    const conversationChangeStream = conversationCollection.watch();
+    const conversationChangeStream = conversationCollection.watch({ fullDocument: "updateLookup" });
 
     messageChangeStream.on('change', (changes) => {
-        console.log("message change");
-        console.log(changes.fullDocument);
+        console.log("message changeeee");
+
         if (changes.operationType == "insert") {
             const messageDetails = changes.fullDocument;
             pusher.trigger("message", "insert", { message: messageDetails });
+        }
+        if (changes.operationType == "delete") {
+            console.log("message deleted");
         }
     })
     userChangeStream.on('change', (changes) => {
@@ -44,9 +47,16 @@ db.once("open", () => {
     })
     conversationChangeStream.on('change', (changes) => {
         console.log("conversation change");
+        console.log(changes.operationType);
         if (changes.operationType == "insert") {
-            const conversationDetails = changes.fullDocument;
+            let conversationDetails = changes.fullDocument;
             pusher.trigger("conversation", "insert", { conversation: conversationDetails });
+        }
+        if (changes.operationType == "update") {
+            let conversationDetails = changes.fullDocument;
+
+            console.log(conversationDetails);
+            pusher.trigger("conversation", "delete", { conversation: conversationDetails });
         }
     })
 });

@@ -8,7 +8,7 @@ class ConversationController {
             console.log(req.body);
             try {
                 const data = req.body;
-                const newConversation = new Conversation({ members: data.members });
+                const newConversation = new Conversation({ members: data.members, _deleting: false });
                 const savedConversation = await newConversation.save();
                 console.log(savedConversation);
                 const newMessage = new Message({
@@ -17,7 +17,7 @@ class ConversationController {
                     text: data.text
                 });
                 const savedMessage = await newMessage.save();
-                
+
                 res.status(201).json(savedConversation);
 
             } catch (err) {
@@ -47,6 +47,22 @@ class ConversationController {
             res.status(200).json(conversation)
         } catch (err) {
             res.status(500).json(err);
+        }
+    }
+    async deleteConversation(req, res) {
+        const id = req.params.id;
+        try {
+            const conversationUpdateResponse = await Conversation.findOneAndUpdate({ _id: id }, { _deleting: true });
+            const conversationResponse = await Conversation.findByIdAndDelete(id);
+            console.log(conversationResponse.data);
+
+            const messageResponse = await Message.deleteMany({ conversationId: id });
+            console.log(messageResponse.deletedCount);
+            res.json(conversationResponse.data)
+
+
+        } catch (err) {
+            console.log(err);
         }
     }
 }

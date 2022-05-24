@@ -4,7 +4,12 @@ const ConversationSchema = mongoose.Schema({
         members: {
             type: Array,
             require: true
-        }
+        },
+        _deleting: {
+            type: Boolean,
+            require: true
+
+        },
     }, { timestamps: true }
 
 );
