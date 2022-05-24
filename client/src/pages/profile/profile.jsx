@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import "./profile.css";
 import { FaRegTimesCircle, FaUserCircle } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
@@ -7,12 +7,44 @@ import axios from "axios";
 export default function Profile() {
   const {user} = useContext(AuthContext);  
   const [modal, setModal] = useState(false);
-  const [state, setState] = useState(false);
-
-  const[userFromDatabse, setUserFromDatabase] = useState(user); 
+  const [state, setState] = useState(false); 
+  const[userFromDatabase, setUserFromDatabase] = useState(user);
+  const [avatar, setAvatar] = useState(userFromDatabase.avatarURL);
   const username =useRef();
   const name = useRef();
   const password =useRef();
+
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res1 = await axios.get("/users/" + user._id, user);
+      setUserFromDatabase(res1.data);
+    };
+    fetchUser();
+  }, []);
+
+
+  const postPicture = (pic) => {
+    if (pic === undefined) {
+      console.log("Err");
+      return;
+    }
+
+    const data = new FormData(); 
+      data.append("file", pic); 
+      data.append("upload_preset", "chat-app")
+      data.append("cloud-name", "dmkdfrjpz"); 
+      fetch("https://api.cloudinary.com/v1_1/dmkdfrjpz/image/upload", {
+        method: "post",
+        body: data,
+      }).then((res) => res.json())
+        .then(data => {
+          setAvatar(data.url.toString()); 
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+  }
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -21,15 +53,14 @@ export default function Profile() {
       name: name.current.value,
       password: password.current.value,
       friends: user.friends,
-      avatarURL:""
+      avatarURL: avatar
     };
 
     try {
       const res= await axios.put("/users/" + user._id, userUpdate);
       // console.log(res.data.status);
       // console.log(res.data); 
-      const res1 = await axios.get("/users/" + user._id, user); 
-      setUserFromDatabase(res1.data);
+      setUserFromDatabase(userUpdate);
       setState(!state);
     } catch(err) {
       console.log(err);
@@ -55,7 +86,7 @@ export default function Profile() {
         onClick={toggleModal}
       >
         <img
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
+          src= {userFromDatabase.avatarURL}
           alt=""
           className="profilePicture"
         />
@@ -66,14 +97,14 @@ export default function Profile() {
           <div className="modal-content">
             <div className="profilePictureWrapper">
               <img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
+                src={userFromDatabase.avatarURL}
                 alt=""
                 className="profilePicturePop"
               />
             </div>
-            <h3>User Name: {userFromDatabse.username}</h3>
-            <h3>Name: {userFromDatabse.name}</h3>
-            <h3>Friends: {userFromDatabse.friends.length}</h3>
+            <h3>User Name: {userFromDatabase.username}</h3>
+            <h3>Name: {userFromDatabase.name}</h3>
+            <h3>Friends: {userFromDatabase.friends.length}</h3>
             <div className="editButtonWrapper">
               <FiEdit2 />
               <button className="editButton" onClick={toggleState}>
@@ -91,24 +122,20 @@ export default function Profile() {
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
             <div className="profilePictureWrapper">
+              <label htmlFor="input" className="inputfile">
+                <img
+                  src={userFromDatabase.avatarURL}
+                  alt=""
+                  className="profilePicturePop"
+                />
+              </label>
               <input
                 type="file"
                 className="inputFile"
                 name="input"
                 id="input"
+                onChange={(e) => postPicture(e.target.files[0])}
               />
-              <label htmlFor="input" className="inputfile">
-                <img
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
-                  alt=""
-                  className="profilePicturePop"
-                />
-                <img
-                  src="https://chat.zalo.me/assets/chat_setting_avatar_icon_edit.32e49958a4d725a69beb65e5f5a568f2.png"
-                  alt=""
-                  className="iconInput"
-                />
-              </label>
             </div>
             <div className="saveWrapper">
               <form className="editForm">
@@ -116,7 +143,7 @@ export default function Profile() {
                   <label className="inputFieldName">UserName</label>
                   <input
                     placeholder="Username"
-                    defaultValue={userFromDatabse.username}
+                    defaultValue={userFromDatabase.username}
                     className="field"
                     type="text"
                     ref={username}
@@ -126,7 +153,7 @@ export default function Profile() {
                   <label className="inputFieldName">Name</label>
                   <input
                     placeholder="Name"
-                    defaultValue={userFromDatabse.name}
+                    defaultValue={userFromDatabase.name}
                     className="field"
                     type="text"
                     ref={name}
@@ -136,7 +163,7 @@ export default function Profile() {
                   <label className="inputFieldName">Password</label>
                   <input
                     placeholder="Password"
-                    defaultValue={userFromDatabse.password}
+                    defaultValue={userFromDatabase.password}
                     className="field"
                     type="password"
                     ref={password}
