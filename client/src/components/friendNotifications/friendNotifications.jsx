@@ -4,11 +4,13 @@ import { AuthContext } from "../../context/AuthContext";
 import "./friendNotifications.css";
 
 
+
 export default function FriendNotifications({invitation}){
     const {user} = useContext(AuthContext);
     const [accept, setAccept] = useState(false);
     const [status, setStatus] = useState(true);
     const [userSend, setUserSend] = useState([]);
+    
 
     useEffect(() => {
         const getInfoUser = async () => {
@@ -46,6 +48,7 @@ export default function FriendNotifications({invitation}){
     }
 
     // console.log(currentUser);
+    
 
     return(
         <>

@@ -70,6 +70,25 @@ export default function FriendViewer() {
         getInvitation();
     },[user])
 
+    useEffect(() => {
+    
+        const pusher = new Pusher("64873375849c544489d1", {
+          cluster: "ap1",
+        });
+    
+        const channel = pusher.subscribe("invitation");
+        channel.bind("insert", function (data) {
+          const newInvitation = data.invitation;
+          if (newInvitation.receiver == user?._id) {
+            setInvitation([...invitation, data.invitation]);
+          }
+        });
+    
+        return () => {
+          channel.unbind("insert");
+          channel.unsubscribe();
+        }
+      },[invitation]);
 
 
     return (
