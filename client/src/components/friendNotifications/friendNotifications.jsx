@@ -58,12 +58,12 @@ export default function FriendNotifications({invitation}){
                     alt="" 
                 />
                 <h1 className="nameUser">{userSend?.name} đã gửi cho bạn lời mời kết bạn</h1>
-             </div>
+            </div>
 
             {!accept? 
             <div className="decision" >
-                <button className="accept" onClick={handleAccept}>accept</button>
-                <button className="refuse" onClick={handleRefuse}>refuse</button>
+                <button className="accept" onClick={handleAccept}>Accept</button>
+                <button className="refuse" onClick={handleRefuse}>Refuse</button>
             </div> 
             : <div className="accepted">
                 <h2>Accepted the friend request!</h2>

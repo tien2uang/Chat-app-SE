@@ -3,12 +3,13 @@
     height: 80px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     cursor: pointer;
-    background-color: rgb(241, 241, 241);
-    margin-top: 12px;
+    background-color: rgb(230, 235, 245);
+    margin-top: 8px;
     border-radius: 16px;
 }
+
 
 
 /* friendAvatar
@@ -19,46 +20,15 @@ friendName */
     height: 50px;
     width: 50px;
     margin-right: 20px;
+    margin-left: 10px;
 }
 
 .friendName {
     font-size: 20px;
+    color: gray;
 }
 
 
-/* .conversationInfo  {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    border-radius: 16px;
-}
-
-
-.conversation :hover {
-    background-color: rgb(226, 226, 226);
-
-}
-
-.conversationImg {
-    width: 45x;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.Info {
-    height: 100%;
-    flex-direction: column;
-    margin-left: 15px;
-}
-
-.room {
-    margin-top: 20px;
-    margin-bottom: 0;
-    font-size: 25px;
-} */
 
 body.active-modal {
     overflow-y: hidden;
