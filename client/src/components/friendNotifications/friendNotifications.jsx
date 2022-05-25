@@ -1,24 +1,26 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import "./friendNotifications.css";
 
 
-export default function FriendNotifications({invitation, currentUser}){
+export default function FriendNotifications({invitation}){
+    const {user} = useContext(AuthContext);
     const [accept, setAccept] = useState(false);
     const [status, setStatus] = useState(true);
-    const [user, setUser] = useState([]);
+    const [userSend, setUserSend] = useState([]);
 
     useEffect(() => {
         const getInfoUser = async () => {
             try {
                 const res = await axios.get("/users/" + invitation.sender)
-                setUser(res.data)
+                setUserSend(res.data)
             } catch (error) {
                 console.log(error);
             }
         }
         getInfoUser();
-    },[])
+    },[user])
 
     
     const delay = ms => new Promise(
@@ -43,7 +45,7 @@ export default function FriendNotifications({invitation, currentUser}){
         console.log("refuse");
     }
 
-    console.log(currentUser);
+    // console.log(currentUser);
 
     return(
         <>
@@ -52,10 +54,10 @@ export default function FriendNotifications({invitation, currentUser}){
             <div className="userWrapper">
                 <img 
                     className="avatarUser"
-                    src={user.avatarURL} 
+                    src={userSend.avatarURL} 
                     alt="" 
                 />
-                <h1 className="nameUser">{user?.name} đã gửi cho bạn lời mời kết bạn</h1>
+                <h1 className="nameUser">{userSend?.name} đã gửi cho bạn lời mời kết bạn</h1>
              </div>
 
             {!accept? 
