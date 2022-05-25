@@ -15,6 +15,7 @@ export default function FriendList({friendId}) {
         try {
             const res = await axios.get("/users/" + friendId)
             setUser(res.data);
+            
         } catch (error) {
             console.log(error);
         }
@@ -39,17 +40,25 @@ export default function FriendList({friendId}) {
         </div>
 
         {model && (
-            <div className="modal">
-            <div onClick={handletoggle} className="overlay"></div>
-            <div className="modal-content">
-              <h2>Profile</h2>
-              <h3>User name</h3>
-              <button className="close-modal" onClick={handletoggle}>
-                <FaRegTimesCircle className="exit" />
-              </button>
+        <div className="modal">
+          <div onClick={handletoggle} className="overlay"></div>
+          <div className="modal-content">
+            <div className="profilePictureWrapper">
+              <img
+                src={user.avatarURL}
+                alt=""
+                className="profilePicturePop"
+              />
             </div>
+            <h3>User Name: {user.username}</h3>
+            <h3>Name: {user.name}</h3>
+            <h3>Friends: {user.friends.length}</h3>
+            <button className="close-modal" onClick={handletoggle}>
+              <FaRegTimesCircle className="exit" />
+            </button>
           </div>
-        )}
+        </div>
+      )}
         
         </>
     );
