@@ -1,9 +1,11 @@
 import "./friSuggestItem.css";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
-export default function FriSuggestItem({userSuggest, currentUser}) {
+export default function FriSuggestItem({userSuggest}) {
 
+    const {user} = useContext(AuthContext);
     const [status, setStatus] = useState(true);
     const [addFriend, setAddFriend] = useState(false);
 
@@ -15,7 +17,7 @@ export default function FriSuggestItem({userSuggest, currentUser}) {
     const handleAddFriend = async () => {
         const invitation = {
             sender: userSuggest._id,
-            receiver: currentUser._id
+            receiver: user._id
         }
         try {
             const res = await axios.post("/invitations/add", invitation)
