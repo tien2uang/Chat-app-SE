@@ -1,7 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
 import {AuthReducer } from "./AuthReducer";
-import { UpdateSuccess } from "./AuthAction";
-import Pusher from "pusher-js";
  
 
  const INITIAL_STATE = {
@@ -17,26 +15,10 @@ import Pusher from "pusher-js";
     
     useEffect(()=>{
       localStorage.setItem("user", JSON.stringify(state.user))
+      console.log("Local user change")
     },[state.user])
 
-    useEffect(()=>{
-      const pusher = new Pusher("64873375849c544489d1", {
-        cluster: "ap1",
-      });
-  
-      const channel = pusher.subscribe("user");
-      channel.bind("update", function (data) {
-        const user = data.user;
-        if (user._id==state.user?._id) {
-          dispatch(UpdateSuccess(user));
-        }
-      });
-  
-      return () => {
-        channel.unbind("update");
-        channel.unsubscribe();
-      }
-    })
+    
     
     return (
       <AuthContext.Provider

@@ -12,6 +12,11 @@
     padding-right: 10px;
 }
 
+input {
+    border: none;
+    outline: none;
+}
+
 
 /* messenger */
 
@@ -22,9 +27,8 @@
 }
 
 .chat_masseages {
-    margin-bottom: 10px;
     background-color: rgb(255, 255, 255);
-    height: 78%;
+    height: 76.5%;
     overflow-y: scroll;
     border-bottom: 1px solid #e8e8ed!important;
     padding: 24px;
@@ -60,58 +64,22 @@ chat_input */
     border-radius: 50%;
 }
 
-.chat_input {
-    height: calc(10% - 10px);
-    display: flex;
-}
-
-.chat_input_wrapper {
-    border-radius: 20px;
-    background-color: rgb(241, 241, 241);
-    width: 80%;
-    height: 60%;
-    margin-left: 50px;
-}
-
-input {
-    width: 100%;
-    height: 95%;
-    outline-width: 0;
-    border-radius: 5px;
-    background-color: rgb(230, 235, 245);
-    margin-left: 10px;
-    padding: 10px;
+.sendButton {
     font-size: 18px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    border: 1px solid #e6ebf5;
-}
-
-.send {
-    width: 40px;
-    height: 100%;
-    font-size: 25px;
+    padding: 10px 17px;
     border-radius: 5px;
-    margin-left: 8px;
-    border: 1px solid transparent;
+    margin-right: 40px;
+    border: none;
+    color: #fff;
     background-color: #7269ef;
-    border-color: 7269ef;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.send:hover {
-    cursor: pointer;
-    background-color: blueviolet;
 }
 
 .send_icon {
-    color: white;
+    color: #fff;
 }
 
 .friendSearchField {
+    border: none;
     width: 100%;
     height: 44px;
     margin-left: 0px;
@@ -150,20 +118,16 @@ input {
     background-color: rgb(226, 226, 226);
 }
 
+.friendSearchForAdd,
 .textMessage {
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: rgb(233, 223, 223);
-    margin: 0;
-}
-
-.friendSearchForAdd {
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: rgb(233, 223, 223);
-    margin: 0;
+    margin-top: 10px;
+    font: 400 17px Arial;
+    border-radius: 5px;
+    background-color: rgb(230, 235, 245);
+    padding: 7px;
+    padding-left: 15px;
+    color: #495057;
+    width: 100%;
 }
 
 .listFriends {
@@ -246,20 +210,99 @@ input {
     padding: 0px;
 }
 
-.chat_input {
-    display: block;
-}
-
-.chatInputWrapper {
+.chat_input_wrapper {
+    width: 100%;
+    height: 45px;
     display: flex;
-    margin-top: 12px;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.chatInputField {
-    flex: 0.95; 
-    width: 70%;
-    font: 400 13.5px Arial;
+.chat_input {
+    width: 100%;
+    height: 93px;
+    padding: 24px;
+}
+
+.input {
+    border: none;
+    outline-width: 0;
+    margin-left: 20px;
+    font: 400 15px Arial;
     border-radius: 5px;
+    background-color: rgb(230, 235, 245);
+    padding: 5px;
+    padding-left: 15px;
+    color: #495057;
+    width: 789px;
+    height: 45px;
 }
 
+.input-container {
+    flex: 3;
+}
 
+.form {
+    height: 45px;
+    width: 1049px;
+}
+
+.addConversationIcon {
+    font-size: 18px;
+}
+
+.conversations-wrapper {
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.conversations-wrapper h5 {
+    font-size: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 10px;
+}
+
+.user_name h5 {
+    font-size: 18px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.chat_input_wrapper {
+    width: 100%;
+    height: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.chat_input {
+    width: 100%;
+    height: 93px;
+    padding: 24px;
+}
+
+.input {
+    border: none;
+    outline-width: 0;
+    margin-left: 20px;
+    font: 400 15px Arial;
+    border-radius: 5px;
+    background-color: rgb(230, 235, 245);
+    padding: 5px;
+    padding-left: 15px;
+    color: #495057;
+    width: 789px;
+    height: 45px;
+}
+
+.input-container {
+    flex: 3;
+}
+
+.form {
+    height: 45px;
+    width: 1049px;
+}
