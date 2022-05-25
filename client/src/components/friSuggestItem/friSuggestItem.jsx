@@ -16,8 +16,8 @@ export default function FriSuggestItem({userSuggest}) {
 
     const handleAddFriend = async () => {
         const invitation = {
-            sender: userSuggest._id,
-            receiver: user._id
+            sender: user._id,
+            receiver: userSuggest._id
         }
         try {
             const res = await axios.post("/invitations/add", invitation)
