@@ -1,107 +1,124 @@
-.signUp {
-  width: 100vw;
-  height: 100vh;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.signIn {
+    width: 100vw;
+    height: 672px;
+    margin-top: 2rem!important;
+    margin-bottom: 3rem!important;
+    padding-top: 3rem;
 }
 
-.signUpRegisterButton a {
-  text-decoration: none;
-  color: white;
+.signInWrapper {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
+.signInContainer {
+    display: flex;
+    justify-content: center;
 }
 
-.signUpRight {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.signInContent {
+    width: 41.66667%;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
-.signUpLeft {
-  background-image: url("https://cdn.dribbble.com/users/4107928/screenshots/14972078/media/b725766f22a2bb6b02cf6fc42c041c7f.jpg?compress=1&resize=400x300");
-  flex: 1;
-  background-size: cover;
+.signInHeader .signInTitle {
+    margin-bottom: 2.5rem;
+    font: 500 35px Trebuchet MS;
+    color: rgb(114, 105, 239);
 }
 
-.signUpRightWrapper {
-    width: 50%;
-    padding-left: 25%;
+.signInHeader h4 {
+    text-align: center;
+    font-size: 1.3125rem;
+    margin-bottom: 0.5rem;
 }
 
-.title {
-  font-size: 40px;
-  font-weight: 800;
-  color: grey;
-  margin-bottom: 10px;
-  text-align: center;
+.signInHeader p {
+    text-align: center;
+    margin-bottom: 1.3rem;
 }
 
-.signUpBox {
-  height: 400px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.signInForm {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid #f5f7fb;
+    border-radius: .25rem;
 }
 
-.signUpInput {
-  height: 50px;
-  border-radius: 10px;
-  border: 1px solid gray;
-  font-size: 18px;
-  padding-left: 20px;
-  margin: 0 0 20px 0;
+.signInFormContainer {
+    flex: 1 1 auto;
+    padding: 2rem 2.3rem;
 }
 
-.signUpInput:focus {
-  outline: none;
+.signInForm label {
+    display: block;
+    margin-bottom: .5rem;
+    font-weight: 600;
+    color: #495057;
 }
 
-.signUpButton {
-  height: 50px;
-  border-radius: 10px;
-  border: none;
-  background-color: gray;
-  color: white;
-  font-size: 20px;
-  font-weight: 500;
-  cursor: pointer;
+input {
+    outline-width: 0;
+    font: 400 15px Arial;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 15px;
+    color: #495057;
+    height: 45px;
+    width: 100%;
 }
 
-.signUpButton:hover {
-  background-color: rgb(101, 119, 101);
-  font-weight: 1000;
+.signInInput {
+    background-color: rgba(230, 235, 245, .25)!important;
+    border: 1px solid #e6ebf5;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    font: 400 14px Arial;
 }
 
-.hadAccount {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align: center;
-  color: gray;
+.signInBox div {
+    margin-bottom: 1rem!important;
 }
 
-.signUpRegisterButton {
-  height: 50px;
-  border-radius: 10px;
-  border: none;
-  background-color: #42b72a;
-  color: white;
-  font-size: 20px;
-  font-weight: 500;
-  cursor: pointer;
+.signInButton {
+    border: 1px solid transparent;
+    padding: .47rem .75rem;
+    font-size: .9375rem;
+    border-radius: .25rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    color: #fff;
+    background-color: #7269ef;
+    margin-top: 1.25rem;
 }
 
-.signUpRegisterButton:hover {
-  background-color: goldenrod;
-  font-weight: 700;
+.signInButton:hover {
+    color: #fff;
+    background-color: #6159cb;
+    border-color: #5b54bf;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a,
+button {
+    outline: none!important;
+}
+
+.signInFooter {
+    text-align: center!important;
+    margin-top: 2rem;
+}
+
+.signInFooter p {
+    margin-top: 0;
+    margin-bottom: 1rem;
 }

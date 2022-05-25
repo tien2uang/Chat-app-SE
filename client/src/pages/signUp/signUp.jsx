@@ -8,26 +8,27 @@ import {SignUpFailure,SignUpStart,SignUpSuccess} from "../../context/AuthAction"
 
 export default function SignUp() {
 
+  const username= useRef();
+  const password= useRef();
   const navigate = useNavigate();
-  const userName=useRef();
   const name= useRef();
-  const password=useRef();
   const checkedPassword=useRef(); 
   const [repeatPasswordCheck,setRepeatPasswordCheck]= useState(true);
   const {error,dispatch}=useContext(AuthContext);
+  const [formWarning,setFormWarning]= useState("");
 
   const handleSubmit=async (e)=>{ 
     e.preventDefault();
     const user = {
-      username: userName.current.value,
+      username: username.current.value,
       name: name.current.value,
       password: password.current.value,
       friends:[],
-      avatarURL:""
+      avatarURL:" "
 
     };
 
-    if(password.current.value===checkedPassword.current.value){
+    if(password.current.value===checkedPassword.current.value &&password.current.value.length>5){
       setRepeatPasswordCheck(true);
       dispatch(SignUpStart());
       try {
@@ -35,11 +36,12 @@ export default function SignUp() {
         console.log(res.data.status);
         if(res.data.status==='success sign up'){
           dispatch(SignUpSuccess());
-          console.log("Đăng ksi thành công");
-          navigate('/signIn');
+          
+          navigate('/signin');
         }
         else{ 
           dispatch(SignUpFailure("Đăng kí thất bại"));
+          setFormWarning("Tài khoản đã tồn tại")
         }
 
         console.log(res.data);
@@ -47,68 +49,92 @@ export default function SignUp() {
         console.log(err);
       }
     }
-    else{
-      setRepeatPasswordCheck(false);
+    else if(password.current.value.length<=5)
+    {
+      setFormWarning("Mật khẩu không đủ mạnh")
     }
+    else if(password.current.value!==checkedPassword.current.value){
+      setRepeatPasswordCheck(false);
+      setFormWarning("Kiểm tra lại mật khẩu của bạn")
+    }
+    
     
   }
 
-  const handeFocus =()=>{
-    setRepeatPasswordCheck(true);
+  const handleFocus =()=>{
+    setFormWarning("");
     dispatch(SignUpStart());
     
   }
   
   return (
-    <div className="signUp">
-      <div className="wrapper">
-        <div className="signUpLeft"></div>
-        <div className="signUpRight">
-          <div>
-            <h1 className="title">Welcome to our chat app!</h1>
+    <div className="signIn">
+    <div className="signInWrapper">
+      
+      <div className="signInContainer">
+        <div className="signInContent">
+
+          <div className= "signInHeader">
+            <h4 className="signInTitle">The 48 Hours</h4>
+            <h4>Sign up</h4>
+            <p>Get your The 48 Hours account now. </p>
+
           </div>
-          <div className="signUpRightWrapper">
-          <form className="signUpBox">
-            <input placeholder="Username" required className="signUpInput" ref={userName} onFocus={handeFocus} />
-            <input
-              placeholder="Name"
-              required
-              className="signUpInput"
-              type="text"
-              ref={name}
-              onFocus={handeFocus}
-            />
-            <input
-              placeholder="Password"
-              required
-              className="signUpInput"
-              type="password"
-              minLength="6"
-              ref={password}
-              onFocus={handeFocus}
-            />
-            <input
-              placeholder="Password Again"
-              required
-              className="signUpInput"
-              type="password"
-              ref={checkedPassword}
-              onFocus={handeFocus}
-            />
-            <h3 style={!repeatPasswordCheck ? {color: 'red'}: {display: 'none'}}>Please confirm your password</h3>
-            <h3 style={error ? {color: 'red'}: {display: 'none'}}>Username already in use</h3>
-            <button className="signUpButton" type="submit" onClick={handleSubmit}>
-              Sign Up
-            </button>
-            <span className="hadAccount">You had an account ?</span>
-            <button className="signUpRegisterButton" onClick={() => {window.location.href = "http://localhost:3000/signIn"}}>
-                Sign In
-            </button>
-          </form>
+          <div className="signInForm">
+            <div className="signInFormContainer">
+
+              <form className="signInBox">
+                <div>
+                  <label>Username</label>
+                  <input placeholder="Username" required className="signInInput" ref={username} onFocus={handleFocus} />
+                </div>
+                <div>
+                  <label>Password</label>
+                  <input
+                  placeholder="Password"
+                  type="password"
+                  required
+                  className="signInInput"
+                  ref={password}
+                  onFocus={handleFocus}
+                />
+                </div>
+                <div>
+                  <label>Password Again</label>
+                  <input
+                  placeholder="Password"
+                  type="password"
+                  required
+                  className="signInInput"
+                  ref={checkedPassword}
+                  onFocus={handleFocus}
+                />
+                </div>
+            
+                <h4 style={{color: "red",display:"block",height:20 }}>
+                  {formWarning}
+                </h4>
+                <button className="signInButton" type="submit"onClick={handleSubmit}>
+                  Sign Up
+                </button>
+              </form>
+            </div>
           </div>
+          <div className="signInFooter">
+            <p>Already have account? 
+              <a href="" style={{color: "#7269ef"}}> Signin</a>
+            </p>
+            <p>© 2022 Chat Application by The 48 Hours Team</p>
+          </div>
+
           
+
         </div>
+        
+        
       </div>
+      
     </div>
+  </div>
   );
 }
