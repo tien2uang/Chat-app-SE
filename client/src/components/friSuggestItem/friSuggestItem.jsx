@@ -32,7 +32,7 @@ export default function FriSuggestItem({userSuggest}) {
     return(<>{ status &&
         <div className="friendItems">
                 <img className="avatar" src ={userSuggest.avatarURL} alt = "img"></img>  
-                <div className="name">{userSuggest?.username}</div>
+                <div className="name">{userSuggest?.name}</div>
                 {!addFriend? <button className="addFriendButton" onClick={handleAddFriend}>Add Friend</button> 
                     : <h1>Request Success!</h1>}
         </div>

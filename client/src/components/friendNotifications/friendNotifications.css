@@ -1,6 +1,6 @@
 .notifications {
-    color: black;
-    background-color: rgb(227, 231, 231);
+    color: rgb(151, 147, 147);
+    background-color: rgb(230, 235, 245);
     height: 80px;
     width: 95%;
     border-radius: 15px;
@@ -38,15 +38,17 @@
 
 .accept, .refuse {
     height: 50%;
+    width: 50px;
     margin-top: 20px;
     border-radius: 10px;
     border: none;
-    background-color: aquamarine;
+    background-color: #948dfc;
+    color: white;
 }
 
 .refuse {
     margin-right: 50px;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .accepted {
@@ -57,10 +59,11 @@
 }
 
 .notifications:hover {
-    background-color: rgb(186, 224, 249);
+    background-color: rgb(223, 227, 228);
 }
 
 .decision :hover {
-    background-color: rgb(236, 253, 180);
+    background-color: #7c73f6;
     cursor: pointer;
+    color: white;
 }

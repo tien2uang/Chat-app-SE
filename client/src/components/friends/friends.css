@@ -4,53 +4,58 @@
     border-bottom-width: 0;
     background-color: #f5f7fb;
 }
-
 /* .tab__2__wrapper {} */
+.friendsearch {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+    margin-top: 10px;
+
+}
 
 .inputSearch {
-    width: 90%;
+    width: 80%;
     padding: 10px;
-    margin-left: 0;
+    margin-left: 10px;
+    border-radius: 20px;
+
 }
 
 .friends {
     overflow-y: auto;
     padding-right: 10px;
+    padding-left: 10px;
 }
 
-.addFriendsWrapper {
-    display: flex;
-    justify-content: space-between;
-    padding: 1.5rem;
-    margin-bottom: 24px;
-    padding-bottom: 0px;
-    width: 100%;
+.friends :hover{
+    background-color: rgb(223, 227, 228);
 }
-
 
 .addFriendsButton {
     border: none;
     border-radius: 50%;
-    height: 35px;
-    width: 35px;
+    height: 40px;
+    width: 40px;
     font-size: 18px;
+    margin-left: 10px;
+    margin-top: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: grey;
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(226, 226, 226);
 }
 
 .addFriendsButton:hover {
     cursor: pointer;
-    background-color: rgb(226, 226, 226);
+    background-color: rgb(205, 202, 202);
 }
 
 .userSearchForAdd {
     padding: 10px;
     font-size: 18px;
     font-weight: bold;
-    background-color: rgb(233, 223, 223);
+    background-color: rgb(223, 217, 217);
     margin: 0 0 10px 0;
 }
 
@@ -59,4 +64,36 @@
     border-radius: 12px;
     overflow-y: auto;
     background-color: rgb(233, 223, 223);
+}
+
+.user {
+    margin-top: 10px;
+}
+.name {
+    margin-left: 10px;
+}
+
+.cancel {
+    
+    height: 30px;
+    width: 60px;
+    margin-top: 10px;
+    margin-left: 150px;
+    margin-right: 10px;
+    border: none;
+    background-color: #7f77f6;
+    border-radius: 10px;
+}
+
+.submit {
+    height: 30px;
+    width: 60px;
+    border: none;
+    background-color: #7f77f6;
+    border-radius: 10px;
+}
+
+.active :hover {
+    background-color: #7269ef;
+    cursor: pointer;
 }

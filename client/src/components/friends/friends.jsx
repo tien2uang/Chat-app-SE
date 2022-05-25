@@ -90,6 +90,7 @@ export default function Friends() {
           setListUserStatus(true)
       }
     } else {
+      setSearchUser("")
       setListUserStatus(false)
     }
   }
@@ -123,14 +124,14 @@ export default function Friends() {
   
   return (
     <div className="friendList">
-      <div className="friendListWrapper">
+      <div className="friendsearch">
         <input  
               className="inputSearch" 
               placeholder="Search for your friends"
               onChange={searchInFriend}
               
         />
-        <div className="addFriendsWrapper">
+        {/* <div className="addFriendsWrapper"> */}
           <button
             className="addFriendsButton"
             onClick={() => setAddFriend(!addFriend)}
@@ -163,8 +164,11 @@ export default function Friends() {
                   </h3>
                 })}
               </div>
-              <button className="cencel" onClick={() => setAddFriend(!addFriend)}>Hủy</button>
+              <div className="active">
+
+              <button className="cancel" onClick={() => setAddFriend(!addFriend)}>Cancel</button>
               <button className="submit" onClick={(e) => handleSubmit(searchUser)}>Submit</button>
+              </div>
             </div>
           </div>
         )}
@@ -186,7 +190,7 @@ export default function Friends() {
                   }
                 </div>
               }</>}
-      </div>
+      
     </div>
   );
 }

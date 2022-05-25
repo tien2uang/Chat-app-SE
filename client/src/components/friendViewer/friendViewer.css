@@ -16,15 +16,20 @@
     font-weight: 900;
     margin-top: 10px;
     margin-bottom: 0;
+    font-size: 20px;
 }
 
 .header2 {
-   margin-top: 0;
-   font-size: 25px;
+    margin-top: 0;
+    border-style: solid;
+    border-top: 1px solid;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
 }
 
 .noFriendsRequest {
-    color: black;
+    color: grey;
     display: flex;
     justify-content: center;
 }
@@ -35,16 +40,12 @@
     align-items: center;
     justify-content: center;
     overflow-y: auto;
-    background-color: aqua;
-
 }
 
 .friendSuggestions {
     max-width: 1070px;
     height: 60%;
     overflow-y: auto;
-    background-color: blueviolet;
-
     display: flex;   
     flex-direction: row;
     flex-wrap: wrap;

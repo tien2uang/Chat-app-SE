@@ -4,6 +4,7 @@ import FriSuggestItem from "../friSuggestItem/friSuggestItem"
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import Pusher from "pusher-js"
 
 export default function FriendViewer() {
 
@@ -51,6 +52,8 @@ export default function FriendViewer() {
                return findInFriend < 0
             })
             setFriSuggestion(userSuggest)
+        } else if(allUser.length > 0 && friendList.length === 0) {
+            setFriSuggestion(allUser)
         }
     },[allUser, friendList])
 
@@ -72,17 +75,17 @@ export default function FriendViewer() {
     return (
         <div className="friendViewer">
             <div className="friendsRequest">
-                <h1 className="header1">Lời mời kết bạn</h1>
+                <h1 className="header1">Friends request</h1>
         
                 {invitation.length > 0? <>{
                             invitation.map(function(invitation, key) {
                                 return <FriendNotifications invitation={invitation} key={key}/>
                             })
                         }</>
-                    : <h2 className="noFriendsRequest">Không có lời mời kết bạn nào</h2>}
+                    : <h2 className="noFriendsRequest">There is no friend request.</h2>}
             </div>
 
-            <h3 className="header2">Gợi ý kết bạn</h3>
+            <h3 className="header2">Friend suggestions</h3>
             <div className="friendSuggestions">
                 {friSuggestion.length > 0? <>{
                     friSuggestion.map(function(userSuggest, key) {
