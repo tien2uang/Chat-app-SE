@@ -6,8 +6,8 @@ import { FiEdit2 } from "react-icons/fi";
 import axios from "axios";
 export default function Profile() {
   const {user} = useContext(AuthContext);  
-  const [modal, setModal] = useState(false);
-  const [state, setState] = useState(false); 
+  const [showProfile, setShowProfile] = useState(false);
+  const [editProfile, setEditProfile] = useState(false); 
   const[userFromDatabase, setUserFromDatabase] = useState(user);
   const [avatar, setAvatar] = useState(userFromDatabase.avatarURL);
   const username =useRef();
@@ -58,22 +58,20 @@ export default function Profile() {
 
     try {
       const res= await axios.put("/users/" + user._id, userUpdate);
-      // console.log(res.data.status);
-      // console.log(res.data); 
       setUserFromDatabase(userUpdate);
-      setState(!state);
+      window.location.reload();  
     } catch(err) {
       console.log(err);
     }
   }
 
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const toggleShowProfile = () => {
+    setShowProfile(!showProfile);
   };
 
-  const toggleState = () => {
-    setState(!state);
+  const toggleEditProfile = () => {
+    setEditProfile(!editProfile);
   };
 
   
@@ -83,7 +81,7 @@ export default function Profile() {
       <button
         className="tab__1__list-items"
         title="Thông tin"
-        onClick={toggleModal}
+        onClick={toggleShowProfile}
       >
         <img
           src= {userFromDatabase.avatarURL}
@@ -91,9 +89,9 @@ export default function Profile() {
           className="profilePicture"
         />
       </button>
-      {modal && (
+      {showProfile && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
+          <div onClick={toggleShowProfile} className="overlay"></div>
           <div className="modal-content">
             <div className="profilePictureWrapper">
               <img
@@ -107,19 +105,19 @@ export default function Profile() {
             <h3>Friends: {userFromDatabase.friends.length}</h3>
             <div className="editButtonWrapper">
               <FiEdit2 />
-              <button className="editButton" onClick={toggleState}>
+              <button className="editButton" onClick={toggleEditProfile}>
                 Edit here!
               </button>
             </div>
-            <button className="close-modal" onClick={toggleModal}>
+            <button className="close-modal" onClick={toggleShowProfile}>
               <FaRegTimesCircle className="exit" />
             </button>
           </div>
         </div>
       )}
-      {state && (
+      {editProfile && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
+          <div onClick={toggleEditProfile} className="overlay"></div>
           <div className="modal-content">
             <div className="profilePictureWrapper">
               <label htmlFor="input" className="inputfile">
@@ -174,7 +172,7 @@ export default function Profile() {
                 </button>
               </form>
             </div>
-            <button className="close-modal" onClick={toggleState}>
+            <button className="close-modal" onClick={toggleEditProfile}>
               <FaRegTimesCircle className="exit" />
             </button>
           </div>

@@ -102,6 +102,7 @@ body.active-modal {
     border-radius: 10px;
     font-size: 1.17em;
     font-weight: bold;
+    padding: 5px;
 }
 
 .saveButton:hover {

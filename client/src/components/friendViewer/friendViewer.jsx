@@ -13,12 +13,12 @@ export default function FriendViewer() {
     const [friendList, setFriendList] = useState([]);
     const [invitation, setInvitation] = useState([]);
 
-
     useEffect(() => {
         const getFriendList = async () => {
           try {
             const res = await axios.get("/users/" + user._id + "/friends")
-            setFriendList(res.data)
+            const temp = [...new Set(res.data)]
+            setFriendList(temp)
           } catch (error) {
             console.log(error);
           }
@@ -54,15 +54,12 @@ export default function FriendViewer() {
         }
     },[allUser, friendList])
 
-    // console.log(user, "user");
-    // console.log(allUser, "all user");
-    // console.log(friendList, "friend");
-    // console.log(friSuggestion, "suggest");
     useEffect(() => {
         const getInvitation = async () => {
             try {
                 const res = await axios.get("/invitations/" + user._id)
-                setInvitation(res.data)
+                const temp = [...new Set(res.data)]
+                setInvitation(temp)
             } catch (error) {
                 console.log(error);
             }

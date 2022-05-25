@@ -33,7 +33,7 @@ export default function FriendList({friendId}) {
         <div className="friend" onClick={handletoggle}>
                 <img
                 className="friendAvatar"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
+                src={user?.avatarURL}
                 alt=""
                 />
                 <h1 className="friendName">{user?.name} </h1>
