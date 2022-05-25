@@ -24,7 +24,7 @@ export default function FriendViewer() {
           }
         }
         getFriendList();
-    },[])
+    },[user])
 
 // 6287681a4125ed94d4dd8fce nam
 // 628604fc83fe10c734755c85 hoan
@@ -40,7 +40,7 @@ export default function FriendViewer() {
         }
         getFriendSuggestion();
 
-    },[])
+    },[user])
     
     useEffect(() => {
         if(allUser.length > 0 && friendList.length > 0) {
@@ -68,7 +68,7 @@ export default function FriendViewer() {
             }
         }
         getInvitation();
-    },[])
+    },[user])
 
 
 
@@ -79,7 +79,7 @@ export default function FriendViewer() {
         
                 {invitation.length > 0? <>{
                             invitation.map(function(invitation, key) {
-                                return <FriendNotifications invitation={invitation} currentUser={user} key={key}/>
+                                return <FriendNotifications invitation={invitation} key={key}/>
                             })
                         }</>
                     : <h2 className="noFriendsRequest">Không có lời mời kết bạn nào</h2>}
@@ -89,7 +89,7 @@ export default function FriendViewer() {
             <div className="friendSuggestions">
                 {friSuggestion.length > 0? <>{
                     friSuggestion.map(function(userSuggest, key) {
-                        return <FriSuggestItem userSuggest={userSuggest} currentUser={user} key={key} />
+                        return <FriSuggestItem userSuggest={userSuggest} key={key} />
                     })
                 }</> : null}
             </div>
