@@ -10,10 +10,9 @@ export default function SignUp() {
 
   const username= useRef();
   const password= useRef();
-  const navigate = useNavigate();
   const name= useRef();
   const checkedPassword=useRef(); 
-  const [repeatPasswordCheck,setRepeatPasswordCheck]= useState(true);
+  const navigate = useNavigate();
   const {error,dispatch}=useContext(AuthContext);
   const [formWarning,setFormWarning]= useState("");
 
@@ -24,12 +23,12 @@ export default function SignUp() {
       name: name.current.value,
       password: password.current.value,
       friends:[],
-      avatarURL:" "
+      avatarURL:"https://res.cloudinary.com/dtm8ojbfl/image/upload/v1653402078/avatar-17-48_exd3sd.png"
 
     };
 
     if(password.current.value===checkedPassword.current.value &&password.current.value.length>5){
-      setRepeatPasswordCheck(true);
+      
       dispatch(SignUpStart());
       try {
         const res= await axios.post("/auth/sign-up", user);
@@ -54,7 +53,7 @@ export default function SignUp() {
       setFormWarning("Mật khẩu không đủ mạnh")
     }
     else if(password.current.value!==checkedPassword.current.value){
-      setRepeatPasswordCheck(false);
+      
       setFormWarning("Kiểm tra lại mật khẩu của bạn")
     }
     
@@ -87,6 +86,10 @@ export default function SignUp() {
                 <div>
                   <label>Username</label>
                   <input placeholder="Username" required className="signInInput" ref={username} onFocus={handleFocus} />
+                </div>
+                <div>
+                  <label>Name</label>
+                  <input placeholder="Username" required className="signInInput" ref={name} onFocus={handleFocus} />
                 </div>
                 <div>
                   <label>Password</label>
@@ -122,7 +125,7 @@ export default function SignUp() {
           </div>
           <div className="signInFooter">
             <p>Already have account? 
-              <a href="" style={{color: "#7269ef"}}> Signin</a>
+              <a href="http://localhost:3000/signIn" style={{color: "#7269ef"}}> Signin</a>
             </p>
             <p>© 2022 Chat Application by The 48 Hours Team</p>
           </div>

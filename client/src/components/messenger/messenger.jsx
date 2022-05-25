@@ -350,7 +350,7 @@ export default function Messenger() {
                         )
                       )
                       : (
-                        <h4 style={{margin:5}}>Không có kết quả</h4>
+                        <h4 style={{margin:5}}>{(friendUserName.length!=0)?"Không có kết quả":""}</h4>
                       )
 
                     
@@ -371,13 +371,13 @@ export default function Messenger() {
                     className="closeAddConver" 
                     onClick={cancelAddConversation}
                     >
-                      Hủy 
+                      Close
                     </button>
                     <button 
                       
                       className="saveAddConver" onClick={addConversation}
                     >
-                      Thêm hội thoại
+                      Create
                     </button>
                     
                     </div>
@@ -425,7 +425,7 @@ export default function Messenger() {
         <div className="chat_masseages">
             {messages.map((m, index) => (
               <div ref={scrollRef} key={m._id}>
-                <Message message={m} own={m.sender == user._id} sender={m.sender} user={user._id} />
+                <Message message={m} own={m.sender == user._id} sender={m.sender} />
               </div>
             ))}
         </div>

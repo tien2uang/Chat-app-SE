@@ -70,7 +70,7 @@ export default function SignIn() {
             </div>
             <div className="signInFooter">
               <p>Don't have accounts? 
-                <a href="" style={{color: "#7269ef"}}> Signup now</a>
+                <a href="http://localhost:3000/signUp" style={{color: "#7269ef"}}> Signup now</a>
               </p>
               <p>© 2022 Chat Application by The 48 Hours Team</p>
             </div>
