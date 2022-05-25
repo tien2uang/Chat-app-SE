@@ -1,92 +1,97 @@
 import "./friendViewer.css"
 import FriendNotifications from "../friendNotifications/friendNotifications";
-import { useState, useEffect } from "react";
+import FriSuggestItem from "../friSuggestItem/friSuggestItem"
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function FriendViewer() {
 
-    const [noti, setNoti] = useState(true);
-    const friends = [
-        {name: "Quyet"},
-        {name: "Nam"},
-        {name: "Huy"}
-    ]
+    const {user} = useContext(AuthContext);
+    const [friSuggestion, setFriSuggestion] = useState([]);
+    const [allUser, setAllUser] = useState([]);
+    const [friendList, setFriendList] = useState([]);
+    const [invitation, setInvitation] = useState([]);
 
-    // useEffect(() => {
-    //     const checkNoti = async () => {
-    //         if(friends.length === 0) {
-    //             setNoti(false);
-    //             console.log("mang rong");
-    //         } else {
-    //             console.log("mang ko rong");
-    //             setNoti(true);
-    //         }
-    //         checkNoti();
-    //         console.log("checkNoti");
-    //     }
-    // },)
 
-    const checkNoti = () => {
-        return friends.length !== 0
-    }
+    useEffect(() => {
+        const getFriendList = async () => {
+          try {
+            const res = await axios.get("/users/" + user._id + "/friends")
+            setFriendList(res.data)
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        getFriendList();
+    },[])
 
-    console.log(checkNoti());
+// 6287681a4125ed94d4dd8fce nam
+// 628604fc83fe10c734755c85 hoan
+//6287a90171b25f4dc7487bb0 quang
+    useEffect(() => {
+        const getFriendSuggestion = async () => {
+           try {
+               const res = await axios.get("/users/" + user._id + "/fr-suggestion")
+               setAllUser(res.data)
+           } catch (error) {
+               console.log(error);
+           }
+        }
+        getFriendSuggestion();
+
+    },[])
+    
+    useEffect(() => {
+        if(allUser.length > 0 && friendList.length > 0) {
+            const userSuggest = allUser.filter(userSug => {
+               const findInFriend = friendList.findIndex(fri =>
+                    fri.id === userSug._id
+                )
+               return findInFriend < 0
+            })
+            setFriSuggestion(userSuggest)
+        }
+    },[allUser, friendList])
+
+    // console.log(user, "user");
+    // console.log(allUser, "all user");
+    // console.log(friendList, "friend");
+    // console.log(friSuggestion, "suggest");
+    useEffect(() => {
+        const getInvitation = async () => {
+            try {
+                const res = await axios.get("/invitations/" + user._id)
+                setInvitation(res.data)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getInvitation();
+    },[])
+
+
+
     return (
         <div className="friendViewer">
             <div className="friendsRequest">
                 <h1 className="header1">Lời mời kết bạn</h1>
         
-                {checkNoti()? <>{
-                            friends.map(function(name, key) {
-                                return <FriendNotifications name={name} key={key}/>
+                {invitation.length > 0? <>{
+                            invitation.map(function(invitation, key) {
+                                return <FriendNotifications invitation={invitation} currentUser={user} key={key}/>
                             })
                         }</>
                     : <h2 className="noFriendsRequest">Không có lời mời kết bạn nào</h2>}
             </div>
 
-                <h3 className="header2">Gợi ý kết bạn</h3>
+            <h3 className="header2">Gợi ý kết bạn</h3>
             <div className="friendSuggestions">
-
-                <div className="friendItems">
-                    <img className="avatar" src = "https://th.bing.com/th/id/R.a3c3ea5bba06fc407424effa07631de1?rik=PnSmjy3pdWOBsA&pid=ImgRaw&r=0" alt = "img"></img>  
-                    <div className="name">Andy</div>
-                    <button className="addFriendButton">Add Friend</button>
-                </div>
-                <div className="friendItems">
-                    <img className="avatar" src = "https://th.bing.com/th/id/R.a3c3ea5bba06fc407424effa07631de1?rik=PnSmjy3pdWOBsA&pid=ImgRaw&r=0" alt = "img"></img>  
-                    <div className="name">Andy</div>
-                    <button className="addFriendButton">Add Friend</button>
-                </div>
-                <div className="friendItems">
-                    <img className="avatar" src = "https://th.bing.com/th/id/R.a3c3ea5bba06fc407424effa07631de1?rik=PnSmjy3pdWOBsA&pid=ImgRaw&r=0" alt = "img"></img>  
-                    <div className="name">Andy</div>
-                    <button className="addFriendButton">Add Friend</button>
-                </div>
-                <div className="friendItems">
-                    <img className="avatar" src = "https://th.bing.com/th/id/R.a3c3ea5bba06fc407424effa07631de1?rik=PnSmjy3pdWOBsA&pid=ImgRaw&r=0" alt = "img"></img>  
-                    <div className="name">Andy</div>
-                    <button className="addFriendButton">Add Friend</button>
-                </div>
-                <div className="friendItems">
-                    <img className="avatar" src = "https://th.bing.com/th/id/R.a3c3ea5bba06fc407424effa07631de1?rik=PnSmjy3pdWOBsA&pid=ImgRaw&r=0" alt = "img"></img>  
-                    <div className="name">Andy</div>
-                    <button className="addFriendButton">Add Friend</button>
-                </div>
-                <div className="friendItems">
-                    <img className="avatar" src = "https://th.bing.com/th/id/R.a3c3ea5bba06fc407424effa07631de1?rik=PnSmjy3pdWOBsA&pid=ImgRaw&r=0" alt = "img"></img>  
-                    <div className="name">Andy</div>
-                    <button className="addFriendButton">Add Friend</button>
-                </div>
-                <div className="friendItems">
-                    <img className="avatar" src = "https://th.bing.com/th/id/R.a3c3ea5bba06fc407424effa07631de1?rik=PnSmjy3pdWOBsA&pid=ImgRaw&r=0" alt = "img"></img>  
-                    <div className="name">Andy</div>
-                    <button className="addFriendButton">Add Friend</button>
-                </div>
-                <div className="friendItems">
-                    <img className="avatar" src = "https://th.bing.com/th/id/R.a3c3ea5bba06fc407424effa07631de1?rik=PnSmjy3pdWOBsA&pid=ImgRaw&r=0" alt = "img"></img>  
-                    <div className="name">Andy</div>
-                    <button className="addFriendButton">Add Friend</button>
-                </div>
-
+                {friSuggestion.length > 0? <>{
+                    friSuggestion.map(function(userSuggest, key) {
+                        return <FriSuggestItem userSuggest={userSuggest} currentUser={user} key={key} />
+                    })
+                }</> : null}
             </div>
         </div>
     );
