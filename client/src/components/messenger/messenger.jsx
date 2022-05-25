@@ -178,9 +178,10 @@ export default function Messenger() {
     };
   }, [conversations]);
 
-  useEffect(() => {
-    const pusher = new Pusher("64873375849c544489d1", {
-      cluster: "ap1",
+  //chuc nang xóa nhưng mà bỏ
+  useEffect(()=>{
+    const pusher = new Pusher('64873375849c544489d1', {
+      cluster: 'ap1'
     });
 
     const channel = pusher.subscribe("conversation");
@@ -245,7 +246,7 @@ export default function Messenger() {
     };
     getConversationName();
     getMessages();
-  }, [currentChat]);
+  }, [currentChat,user]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -349,6 +350,7 @@ export default function Messenger() {
       </div>
 
       <div className="tab__3">
+<<<<<<< HEAD
         {currentChat != null ? (
           <>
             <div className="chat_header">
@@ -364,6 +366,31 @@ export default function Messenger() {
                 <div className="user_name">
                   <h5 className="user_name">{currentChatName}</h5>
                 </div>
+=======
+        {currentChat!= null ? (
+      <>
+        <div className="chat_header">
+          <div className="user">
+            <div className="user_avatar">
+              <img
+                className="user_avatar"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
+                alt=""
+              />
+            </div>
+           
+            <div className="user_name">
+                <h5 className="user_name">{currentChatName}</h5>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div className="chat_masseages">
+            {messages.map((m, index) => (
+              <div ref={scrollRef} key={m._id}>
+                <Message message={m} own={m.sender === user._id} sender={m.sender} />
+>>>>>>> 65c3a5f64ed8755d44016fcba19d7aaf4c2cb966
               </div>
             </div>
 

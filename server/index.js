@@ -6,6 +6,7 @@ const messageRouter = require("./routers/messages");
 const conversationRouter = require("./routers/conversations");
 const authRouter = require('./routers/authRoutes');
 const userRouter = require('./routers/user');
+const invitationRouter = require('./routers/invitations');
 const Pusher = require("pusher");
 
 const dbURI = 'mongodb+srv://hfghfg123456:hfghfg123456@profile.hxemy.mongodb.net/Database?retryWrites=true&w=majority';
@@ -26,10 +27,13 @@ db.once("open", () => {
     const messageCollection = db.collection('messages');
     const userCollection = db.collection('users');
     const conversationCollection = db.collection('conversations');
-
+    const invitationCollection = db.collection('invitations');
     const messageChangeStream = messageCollection.watch();
-    const userChangeStream = userCollection.watch();
+    const userChangeStream = userCollection.watch({ fullDocument: "updateLookup" });
+    const invitationChangeStream = invitationCollection.watch();
     const conversationChangeStream = conversationCollection.watch({ fullDocument: "updateLookup" });
+
+
 
     messageChangeStream.on('change', (changes) => {
         console.log("message changeeee");
@@ -44,6 +48,11 @@ db.once("open", () => {
     })
     userChangeStream.on('change', (changes) => {
         console.log("user change");
+        if (changes.operationType == "update") {
+            const userDetails = changes.fullDocument;
+            console.log(userDetails);
+            pusher.trigger("user", "update", { user: userDetails });
+        }
     })
     conversationChangeStream.on('change', (changes) => {
         console.log("conversation change");
@@ -59,6 +68,17 @@ db.once("open", () => {
             pusher.trigger("conversation", "delete", { conversation: conversationDetails });
         }
     })
+    invitationChangeStream.on('change', (changes) => {
+        console.log("invitation change");
+        if (changes.operationType == "insert") {
+            let invitationDetails = changes.fullDocument;
+            pusher.trigger("invitation", "insert", { invitation: invitationDetails });
+        }
+        if (changes.operationType == "delete") {
+            pusher.trigger("invitation", "delete", { invitation: "xoa invitation" });
+        }
+
+    })
 });
 
 app.use(bodyParser.json());
@@ -70,6 +90,7 @@ app.use("/api/conversations", conversationRouter);
 app.use("/api/messages", messageRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/invitations", invitationRouter);
 app.listen(8800, () => {
     console.log("Backend server is running!");
 });
