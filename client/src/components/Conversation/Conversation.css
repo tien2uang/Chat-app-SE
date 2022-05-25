@@ -18,10 +18,6 @@
     align-items: center;
 }
 
-.conversation :hover {
-    background-color: #7a7f9a;
-}
-
 .conversationImg {
     width: 35x;
     height: 35px;
@@ -45,4 +41,8 @@
 .messageText {
     margin-top: 0px;
     margin-bottom: 0;
+}
+
+.conversation-wapper:hover {
+    background-color: red;
 }

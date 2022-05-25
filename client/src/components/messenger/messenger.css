@@ -7,11 +7,14 @@
     margin-right: 2px;
 }
 
-.tab__2__wrapper {}
-
 .conversations {
     overflow-y: auto;
     padding-right: 10px;
+}
+
+input {
+    border: none;
+    outline: none;
 }
 
 
@@ -24,9 +27,8 @@
 }
 
 .chat_masseages {
-    margin-bottom: 10px;
     background-color: rgb(255, 255, 255);
-    height: 78%;
+    height: 76.5%;
     overflow-y: scroll;
     border-bottom: 1px solid #e8e8ed!important;
     padding: 24px;
@@ -62,48 +64,22 @@ chat_input */
     border-radius: 50%;
 }
 
-.chat_input {
-    height: calc(10% - 10px);
-    display: flex;
-}
-
-.chat_input_wrapper {
-    border-radius: 20px;
-    background-color: rgb(241, 241, 241);
-    width: 80%;
-    height: 60%;
-    margin-left: 50px;
-}
-
-input {
-    width: 93%;
-    height: 95%;
+.sendButton {
+    font-size: 18px;
+    padding: 10px 17px;
+    border-radius: 5px;
+    margin-right: 40px;
     border: none;
-    outline-width: 0;
-    font-size: 20px;
-    border-radius: 20px;
-    background-color: rgb(241, 241, 241);
-    margin-left: 10px;
-}
-
-.send {
-    height: 65%;
-    font-size: 25px;
-    border-radius: 15px;
-    margin-left: 8px;
-    border: none;
-    background-color: white;
+    color: #fff;
+    background-color: #7269ef;
 }
 
 .send_icon {
-    color: #062b49;
-}
-
-.send_icon :hover {
-    color: aqua;
+    color: #fff;
 }
 
 .friendSearchField {
+    border: none;
     width: 100%;
     height: 44px;
     margin-left: 0px;
@@ -142,20 +118,16 @@ input {
     background-color: rgb(226, 226, 226);
 }
 
+.friendSearchForAdd,
 .textMessage {
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: rgb(233, 223, 223);
-    margin: 0;
-}
-
-.friendSearchForAdd {
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: rgb(233, 223, 223);
-    margin: 0;
+    margin-top: 10px;
+    font: 400 17px Arial;
+    border-radius: 5px;
+    background-color: rgb(230, 235, 245);
+    padding: 7px;
+    padding-left: 15px;
+    color: #495057;
+    width: 100%;
 }
 
 .listFriends {
@@ -236,4 +208,41 @@ input {
     font-size: 18px;
     margin: 0px;
     padding: 0px;
+}
+
+.chat_input_wrapper {
+    width: 100%;
+    height: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.chat_input {
+    width: 100%;
+    height: 93px;
+    padding: 24px;
+}
+
+.input {
+    border: none;
+    outline-width: 0;
+    margin-left: 20px;
+    font: 400 15px Arial;
+    border-radius: 5px;
+    background-color: rgb(230, 235, 245);
+    padding: 5px;
+    padding-left: 15px;
+    color: #495057;
+    width: 789px;
+    height: 45px;
+}
+
+.input-container {
+    flex: 3;
+}
+
+.form {
+    height: 45px;
+    width: 1049px;
 }

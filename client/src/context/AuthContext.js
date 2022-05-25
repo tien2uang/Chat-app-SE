@@ -1,6 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
 import {AuthReducer } from "./AuthReducer";
-
  
 
  const INITIAL_STATE = {
@@ -16,7 +15,10 @@ import {AuthReducer } from "./AuthReducer";
     
     useEffect(()=>{
       localStorage.setItem("user", JSON.stringify(state.user))
+      console.log("Local user change")
     },[state.user])
+
+    
     
     return (
       <AuthContext.Provider

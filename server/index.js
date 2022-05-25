@@ -29,9 +29,11 @@ db.once("open", () => {
     const conversationCollection = db.collection('conversations');
     const invitationCollection = db.collection('invitations');
     const messageChangeStream = messageCollection.watch();
-    const userChangeStream = userCollection.watch();
+    const userChangeStream = userCollection.watch({ fullDocument: "updateLookup" });
     const invitationChangeStream = invitationCollection.watch();
     const conversationChangeStream = conversationCollection.watch({ fullDocument: "updateLookup" });
+
+
 
     messageChangeStream.on('change', (changes) => {
         console.log("message changeeee");
@@ -46,6 +48,11 @@ db.once("open", () => {
     })
     userChangeStream.on('change', (changes) => {
         console.log("user change");
+        if (changes.operationType == "update") {
+            const userDetails = changes.fullDocument;
+            console.log(userDetails);
+            pusher.trigger("user", "update", { user: userDetails });
+        }
     })
     conversationChangeStream.on('change', (changes) => {
         console.log("conversation change");
