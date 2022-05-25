@@ -61,7 +61,8 @@ export default function Profile() {
       // console.log(res.data.status);
       // console.log(res.data); 
       setUserFromDatabase(userUpdate);
-      setState(!state);
+      setModal(false); 
+      setState(false); 
     } catch(err) {
       console.log(err);
     }
@@ -73,6 +74,7 @@ export default function Profile() {
   };
 
   const toggleState = () => {
+    setModal(!modal);
     setState(!state);
   };
 
@@ -119,7 +121,7 @@ export default function Profile() {
       )}
       {state && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
+          <div onClick={toggleState} className="overlay"></div>
           <div className="modal-content">
             <div className="profilePictureWrapper">
               <label htmlFor="input" className="inputfile">

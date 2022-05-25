@@ -1,5 +1,6 @@
 import "./messenger.css";
-import { FaPaperPlane, FaRegTimesCircle } from "react-icons/fa";
+import {FaRegTimesCircle } from "react-icons/fa";
+import {BiSend} from "react-icons/bi"
 import { AiOutlinePlus } from "react-icons/ai";
 import Message from "../message/message";
 import Conversation from "../Conversation/Conversation";
@@ -16,80 +17,72 @@ export default function Messenger() {
   const [currentChatName, setCurrentChatName] = useState(null);
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState("");
-  const [newConversationInputText,setNewConversationInputText] = useState("");
+  const [newConversationInputText, setNewConversationInputText] = useState("");
   const scrollRef = useRef();
   const [addConver, setAddConver] = useState(false);
-  const [friendsDontHaveConversation,setFriendsDontHaveConversation] = useState([]);
-  const [friendUserName,setFriendUserName] = useState('');
+  const [friendsDontHaveConversation, setFriendsDontHaveConversation] =
+    useState([]);
+  const [friendUserName, setFriendUserName] = useState("");
 
-  
-  
-  const addConversation= async (e)=>{ 
-
+  const addConversation = async (e) => {
     console.log("click");
     e.preventDefault();
-    const data={
-      members:[user.username,friendUserName],
-      text:newConversationInputText,
-      sender:user._id
+    const data = {
+      members: [user.username, friendUserName],
+      text: newConversationInputText,
+      sender: user._id,
+    };
+    try {
+      const res = axios.post("/conversations", data);
+      console.log(res.data);
+      setNewConversationInputText("");
+      setAddConver(!addConver);
+    } catch (err) {
+      console.log(err);
     }
-    try { 
-        const res= axios.post("/conversations",data);
-        console.log(res.data);
-        setNewConversationInputText("");
-        setAddConver(!addConver)
-    }
-    catch (err) {
-      console.log(err)
-    }
+  };
 
-
-  }
-
-  const searchFriendsForNewConversation= async (e)=>{
-    try{
+  const searchFriendsForNewConversation = async (e) => {
+    try {
       setFriendUserName(e.target.value);
       const res = await axios.get("/conversations/" + user.username);
-      const userConversations=res.data; 
-      const friendsResponse = await axios.get("/users/" + user._id+"/friends");
-      const friends=friendsResponse.data;
-     
-      
-      
+      const userConversations = res.data;
+      const friendsResponse = await axios.get(
+        "/users/" + user._id + "/friends"
+      );
+      const friends = friendsResponse.data;
 
-      const hasntConversationFriends= friends.filter(friend=>{
-        const checkForHasntConversation=true;
+      const hasntConversationFriends = friends.filter((friend) => {
+        const checkForHasntConversation = true;
         const userName = friend.username;
-        if(!userName.includes(e.target.value) ||e.target.value == "")
-        {
+        if (!userName.includes(e.target.value) || e.target.value == "") {
           return false;
-        }
-        else{
-          if(userConversations.length>0){
-            userConversations.forEach(conversation=>{
-              conversation.members.forEach(member=>{
-                if(member.includes(e.target.value)&& member!=user.username) {
-                      checkForHasntConversation=false;
-                      return checkForHasntConversation;
+        } else {
+          if (userConversations.length > 0) {
+            userConversations.forEach((conversation) => {
+              conversation.members.forEach((member) => {
+                if (
+                  member.includes(e.target.value) &&
+                  member != user.username
+                ) {
+                  checkForHasntConversation = false;
+                  return checkForHasntConversation;
                 }
-              })
-            })
-          } else { 
+              });
+            });
+          } else {
             return true;
           }
         }
-      
 
         return checkForHasntConversation;
-      })
+      });
       console.log(hasntConversationFriends);
-       setFriendsDontHaveConversation(hasntConversationFriends);
-    }
-    catch(err){
+      setFriendsDontHaveConversation(hasntConversationFriends);
+    } catch (err) {
       console.log(err);
     }
- }
-    
+  };
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -115,8 +108,8 @@ export default function Messenger() {
     try {
       console.log(user.username);
       const res = await axios.get("/conversations/" + user.username);
-      const userConversations=res.data;
-      const filteredConversations = userConversations.filter(conversation =>{
+      const userConversations = res.data;
+      const filteredConversations = userConversations.filter((conversation) => {
         const members = conversation.members;
         const filteredMembers = members.filter(
           (member) =>
@@ -132,12 +125,11 @@ export default function Messenger() {
     }
   };
 
-  
   useEffect(() => {
     const getConversations = async () => {
       try {
         const res = await axios.get("/conversations/" + user.username);
-        
+
         setConversations(res.data);
       } catch (err) {
         console.log(err);
@@ -147,7 +139,6 @@ export default function Messenger() {
   }, [user._id]);
 
   useEffect(() => {
-    
     const pusher = new Pusher("64873375849c544489d1", {
       cluster: "ap1",
     });
@@ -163,90 +154,78 @@ export default function Messenger() {
     return () => {
       channel.unbind("insert");
       channel.unsubscribe();
-    }
-  },[messages]);
+    };
+  }, [messages]);
 
-  useEffect(()=>{
-    const pusher = new Pusher('64873375849c544489d1', {
-      cluster: 'ap1'
+  useEffect(() => {
+    const pusher = new Pusher("64873375849c544489d1", {
+      cluster: "ap1",
     });
 
-    const channel = pusher.subscribe('conversation');
-    channel.bind('insert', function(data) {
-      
-
-      const newConversation =data.conversation;
-      if(newConversation.members.includes(user.username)){
-        setConversations([...conversations,data.conversation]);
-        setCurrentChat(data.conversation);  
-        
+    const channel = pusher.subscribe("conversation");
+    channel.bind("insert", function (data) {
+      const newConversation = data.conversation;
+      if (newConversation.members.includes(user.username)) {
+        setConversations([...conversations, data.conversation]);
+        setCurrentChat(data.conversation);
       }
-      
     });
 
-   
+    return () => {
+      channel.unbind("insert");
 
-    return ()=>{
-      channel.unbind('insert');
-     
       channel.unsubscribe();
-    }
-  },[conversations]);
+    };
+  }, [conversations]);
 
-  useEffect(()=>{
-    const pusher = new Pusher('64873375849c544489d1', {
-      cluster: 'ap1'
+  useEffect(() => {
+    const pusher = new Pusher("64873375849c544489d1", {
+      cluster: "ap1",
     });
 
-    const channel = pusher.subscribe('conversation');
-    channel.bind('delete', function(data){
-      
-      console.log(currentChat)
-      const deleteConversation =data.conversation;
+    const channel = pusher.subscribe("conversation");
+    channel.bind("delete", function (data) {
+      console.log(currentChat);
+      const deleteConversation = data.conversation;
       console.log(deleteConversation);
       const getConversations = async () => {
         try {
-          
           if (deleteConversation.members.includes(user.username)) {
-            console.log("true")
-            console.log(currentChat)
-            if(currentChat!=null){
-              console.log("currentChat khac null")
-              console.log(deleteConversation._id," ",currentChat._id)
-              if(deleteConversation._id==currentChat._id ){
+            console.log("true");
+            console.log(currentChat);
+            if (currentChat != null) {
+              console.log("currentChat khac null");
+              console.log(deleteConversation._id, " ", currentChat._id);
+              if (deleteConversation._id == currentChat._id) {
                 setCurrentChat(null);
-                
               }
             }
-            
+
             const res = await axios.get("/conversations/" + user.username);
 
             setConversations(res.data);
-            
           }
         } catch (err) {
           console.log(err);
         }
       };
       getConversations();
-
-    })
-    return ()=>{
+    });
+    return () => {
       channel.unbind("delete");
       channel.unsubscribe();
-    }
-  },[conversations]);
+    };
+  }, [conversations]);
 
-  useEffect(()=>{
-  
-    
-    const getConversationName= async ()=>{
-     try{
-        if(currentChat!=null){
-          const guestUserName = currentChat.members.find(member=>member !==user.username);
-          const res= await axios.get("/users/username/"+guestUserName);
-          
-          
+  useEffect(() => {
+    const getConversationName = async () => {
+      try {
+        if (currentChat != null) {
+          const guestUserName = currentChat.members.find(
+            (member) => member !== user.username
+          );
+          const res = await axios.get("/users/username/" + guestUserName);
+
           setCurrentChatName(res.data.name);
         }
       } catch (e) {
@@ -282,7 +261,7 @@ export default function Messenger() {
               className="addConversationButton"
               onClick={() => setAddConver(!addConver)}
             >
-              <AiOutlinePlus className="addConversationIcon"/>
+              <AiOutlinePlus className="addConversationIcon" />
             </button>
           </div>
           <div className="searchFriendBar">
@@ -301,49 +280,50 @@ export default function Messenger() {
                 <div className="modal-content">
                   <div className="addConverForm">
                     <div className="addConverField">
-                      <input value={friendUserName}
-                      
+                      <input
+                        value={friendUserName}
                         placeholder="Tìm kiếm bạn bè"
                         className="friendSearchForAdd"
                         onChange={searchFriendsForNewConversation}
                       />
                     </div>
                     <div className="listFriends">
-                      {friendsDontHaveConversation.length>0 ? (
-                        friendsDontHaveConversation.map((friend) =>(
-                          <div onClick={(e)=>{setFriendUserName(friend.username)}} key={friend.id}>
-                              <h3>{friend.name} @{friend.username}</h3>
+                      {friendsDontHaveConversation.length > 0 ? (
+                        friendsDontHaveConversation.map((friend) => (
+                          <div
+                            onClick={(e) => {
+                              setFriendUserName(friend.username);
+                            }}
+                            key={friend.id}
+                          >
+                            <h3>
+                              {friend.name} @{friend.username}
+                            </h3>
                           </div>
-                        )
-                         
-                        )
-                      )
-                      : (
+                        ))
+                      ) : (
                         <h3>Không có kết quả</h3>
-                      )
-
-                    
-                      }
+                      )}
                     </div>
                     <div className="addConverField">
-                      <input value={newConversationInputText}
+                      <input
+                        value={newConversationInputText}
                         placeholder="Nhập tin nhắn"
                         className="textMessage"
-                        onChange={(e)=>{setNewConversationInputText(e.target.value)}}
+                        onChange={(e) => {
+                          setNewConversationInputText(e.target.value);
+                        }}
                       />
                     </div>
-                    <button 
-                      
-                      className="saveAddConver" onClick={addConversation}
-                    >
+                    <button className="saveAddConver" onClick={addConversation}>
                       Thêm hội thoại
                     </button>
                   </div>
                   <button
-                    className="closeAddConver" 
+                    className="closeAddConver"
                     onClick={() => setAddConver(!addConver)}
                   >
-                    Hủy 
+                    Hủy
                   </button>
                 </div>
               </div>
@@ -353,70 +333,79 @@ export default function Messenger() {
           <div className="conversations-wrapper">
             <h5>Conversations</h5>
             <div className="conversations">
-            {conversations.map((c) => (
-              <div onClick={() => {setCurrentChat(c)}} key={c._id}>
-                <Conversation conversation={c} currentChat={currentChat} />
-              </div>
-            ))}
+              {conversations.map((c) => (
+                <div
+                  onClick={() => {
+                    setCurrentChat(c);
+                  }}
+                  key={c._id}
+                >
+                  <Conversation conversation={c} currentChat={currentChat} />
+                </div>
+              ))}
             </div>
           </div>
-          
         </div>
       </div>
-      
+
       <div className="tab__3">
-        {currentChat!= null ? (
-      <>
-        <div className="chat_header">
-          <div className="user">
-            <div className="user_avatar">
-              <img
-                className="user_avatar"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
-                alt=""
-              />
-            </div>
-           
-            <div className="user_name">
-                <h5 className="user_name">{currentChatName}</h5>
-            </div>
-            
-          </div>
-        </div>
-        
-        <div className="chat_masseages">
-            {messages.map((m, index) => (
-              <div ref={scrollRef} key={m._id}>
-                <Message message={m} own={m.sender === user._id} />
+        {currentChat != null ? (
+          <>
+            <div className="chat_header">
+              <div className="user">
+                <div className="user_avatar">
+                  <img
+                    className="user_avatar"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
+                    alt=""
+                  />
+                </div>
+
+                <div className="user_name">
+                  <h5 className="user_name">{currentChatName}</h5>
+                </div>
               </div>
-            ))}
-        </div>
-        
-
-        <div className="chat_input">
-          <form action="">
-            <div className="chat_input_wrapper">
-              <input
-                value={inputText}
-                type="text"
-                className="input"
-                placeholder="Nhập tin nhắn..."
-                onChange={(e) => setInputText(e.target.value)}
-              />
             </div>
 
-            <button
-              className="send"
-              title="Gửi"
-              type="submit"
-              onClick={sendMessage}
-            >
-              <FaPaperPlane className="send_icon" />
-            </button>
-          </form>
-        </div>
-      </>):(
-          <div><h1>Khong co tin nhan</h1></div>
+            <div className="chat_masseages">
+              {messages.map((m, index) => (
+                <div ref={scrollRef} key={m._id}>
+                  <Message message={m} own={m.sender === user._id} />
+                </div>
+              ))}
+            </div>
+
+            <div className="chat_input">
+              <form action="">
+                <div className="chatInputWrapper">
+                  <div className="chatInputField">
+                    <input
+                      value={inputText}
+                      type="text"
+                      className="input"
+                      placeholder="Nhập tin nhắn..."
+                      onChange={(e) => setInputText(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="sendIconWrapper">
+                    <button
+                      className="send"
+                      title="Gửi"
+                      type="submit"
+                      onClick={sendMessage}
+                    >
+                      <BiSend className="send_icon" />
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </>
+        ) : (
+          <div>
+            <h1>Khong co tin nhan</h1>
+          </div>
         )}
       </div>
     </>
