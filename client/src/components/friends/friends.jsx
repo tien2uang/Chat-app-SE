@@ -22,7 +22,7 @@ export default function Friends() {
       }
     }
     getFriendInfo();
-  },[])
+  },[user])
 
   const search = async (e) => {
     if(e.target.value.length !==0) {
