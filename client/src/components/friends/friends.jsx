@@ -88,6 +88,13 @@ export default function Friends() {
           console.log(userResult);
           setSearchUserResult(userResult)
           setListUserStatus(true)
+      } else if( friendList.length === 0) {
+        const userResult2 = allUser.filter(user_ =>
+          user_.username.includes(e.target.value)
+        )
+        console.log(userResult2);
+        setSearchUserResult(userResult2)
+        setListUserStatus(true)
       }
     } else {
       setSearchUser("")
