@@ -13,7 +13,8 @@ export default function Messenger() {
   const { user } = useContext(AuthContext);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
-  const [currentChatName, setCurrentChatName] = useState(null);
+  const [currentChatName, setCurrentChatName] = useState('');
+  const [currenChatAvatarURL,setCurrentChatAvatarURL] = useState('');
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState("");
   const [newConversationInputText,setNewConversationInputText] = useState("");
@@ -22,8 +23,20 @@ export default function Messenger() {
   const [friendsDontHaveConversation,setFriendsDontHaveConversation] = useState([]);
   const [friendUserName,setFriendUserName] = useState('');
 
+  const [formWarning,setFormWarning] = useState("");
+  
+  const handleFormFocus =()=>{
+    setFormWarning("");
+  }
   
   
+  const cancelAddConversation = (e)=>{
+    setFriendUserName("");
+    setFormWarning("");
+    setNewConversationInputText("");
+    setAddConver(!addConver);
+  }
+
   const addConversation= async (e)=>{ 
 
     console.log("click");
@@ -34,10 +47,22 @@ export default function Messenger() {
       sender:user._id
     }
     try { 
-        const res= axios.post("/conversations",data);
-        console.log(res.data);
-        setNewConversationInputText("");
-        setAddConver(!addConver)
+        if(friendsDontHaveConversation.filter(
+          (friend)=>(friend.username.includes(friendUserName))).length==0){
+          setFormWarning("User không hợp lệ");
+          console.log(friendUserName);
+          console.log(friendsDontHaveConversation);
+        } else if(newConversationInputText.length==0){
+          setFormWarning("Vui lòng điền tin nhắn")
+          console.log("Khong co tin nhan");
+        }
+        else{ 
+          const res= axios.post("/conversations",data);
+          console.log(res.data);
+          setNewConversationInputText("");
+          setAddConver(!addConver)
+
+        }
     }
     catch (err) {
       console.log(err)
@@ -99,10 +124,13 @@ export default function Messenger() {
       text: inputText,
     };
     try {
-      const res = await axios.post("/messages/", message);
-      console.log(res.data);
-      setInputText("");
-      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      if(inputText.length>0){
+        const res = await axios.post("/messages/", message);
+        console.log(res.data);
+        setInputText("");
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+
+      }
     } catch (e) {
       console.log(e);
     }
@@ -247,7 +275,7 @@ export default function Messenger() {
           const guestUserName = currentChat.members.find(member=>member !==user.username);
           const res= await axios.get("/users/username/"+guestUserName);
           
-          
+          setCurrentChatAvatarURL(res.data.avatarURL);
           setCurrentChatName(res.data.name);
         }
       } catch (e) {
@@ -301,9 +329,11 @@ export default function Messenger() {
                 ></div>
                 <div className="modal-content">
                   <div className="addConverForm">
+                    
                     <div className="addConverField">
+
                       <input value={friendUserName}
-                      
+                        onFocus={handleFormFocus}
                         placeholder="Tìm kiếm bạn bè"
                         className="friendSearchForAdd"
                         onChange={searchFriendsForNewConversation}
@@ -313,39 +343,46 @@ export default function Messenger() {
                       {friendsDontHaveConversation.length>0 ? (
                         friendsDontHaveConversation.map((friend) =>(
                           <div onClick={(e)=>{setFriendUserName(friend.username)}} key={friend.id}>
-                              <h3>{friend.name} @{friend.username}</h3>
+                              <h4 style={{margin:5}}>{friend.name} @{friend.username}</h4>
                           </div>
                         )
                          
                         )
                       )
                       : (
-                        <h3>Không có kết quả</h3>
+                        <h4 style={{margin:5}}>Không có kết quả</h4>
                       )
 
                     
                       }
                     </div>
+                    
                     <div className="addConverField">
                       <input value={newConversationInputText}
                         placeholder="Nhập tin nhắn"
                         className="textMessage"
                         onChange={(e)=>{setNewConversationInputText(e.target.value)}}
+                        onFocus={handleFormFocus}
                       />
                     </div>
+                    <h4 style={{margin:5,color:"red",height:20}}>{formWarning}</h4>
+                    <div className="addConverFormButton">
+                    <button
+                    className="closeAddConver" 
+                    onClick={cancelAddConversation}
+                    >
+                      Hủy 
+                    </button>
                     <button 
                       
                       className="saveAddConver" onClick={addConversation}
                     >
                       Thêm hội thoại
                     </button>
+                    
+                    </div>
                   </div>
-                  <button
-                    className="closeAddConver" 
-                    onClick={() => setAddConver(!addConver)}
-                  >
-                    Hủy 
-                  </button>
+                  
                 </div>
               </div>
             )}
@@ -373,7 +410,7 @@ export default function Messenger() {
             <div className="user_avatar">
               <img
                 className="user_avatar"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
+                src={currenChatAvatarURL}
                 alt=""
               />
             </div>
@@ -388,32 +425,38 @@ export default function Messenger() {
         <div className="chat_masseages">
             {messages.map((m, index) => (
               <div ref={scrollRef} key={m._id}>
-                <Message message={m} own={m.sender === user._id} sender={m.sender} />
+                <Message message={m} own={m.sender == user._id} sender={m.sender} user={user._id} />
               </div>
             ))}
         </div>
         
 
         <div className="chat_input">
-          <form action="">
+          <form action="" className="form">
             <div className="chat_input_wrapper">
-              <input
+              <div className="input-container">
+                <input
                 value={inputText}
                 type="text"
                 className="input"
                 placeholder="Nhập tin nhắn..."
                 onChange={(e) => setInputText(e.target.value)}
-              />
-            </div>
-
-            <button
-              className="send"
+                />
+              </div>
+              
+              <button
+              className="sendButton"
               title="Gửi"
               type="submit"
               onClick={sendMessage}
-            >
+              disabled={inputText.length==0}
+              style={(inputText.length==0)?{opacity:0.6}:{opacity:1}}
+              >
               <FaPaperPlane className="send_icon" />
             </button>
+            </div>
+
+            
           </form>
         </div>
       </>):(

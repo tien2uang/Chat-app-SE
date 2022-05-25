@@ -2,18 +2,44 @@ import SignIn from './pages/signIn/signIn';
 import SignUp from './pages/signUp/signUp';
 import Home from './pages/home/home';
 import Friend from './pages/friendPage/friend';
+import Pusher from "pusher-js";
+
 import {
   BrowserRouter as Router,
   Routes,
   Route, 
   Navigate
 } from "react-router-dom";
-import { useContext } from 'react';
+import { useContext,useEffect } from 'react';
 import { AuthContext } from './context/AuthContext';
-
+import { UpdateSuccess } from "./context/AuthAction";
 
 function App() {
-  const { user } = useContext(AuthContext); 
+  const { user,dispatch } = useContext(AuthContext); 
+
+  useEffect(()=>{
+    const pusher = new Pusher("64873375849c544489d1", {
+      cluster: "ap1",
+    });
+
+    const channel = pusher.subscribe("user");
+    channel.bind("update", function (data) {
+      const updatedUser = data.user;
+      console.log("trigger")
+      console.log(data.user)
+      if (updatedUser._id==user?._id) {
+        console.log("cap nhat avatar "+user.username)
+        dispatch(UpdateSuccess(updatedUser));
+      }
+    });
+
+    return () => {
+      channel.unbind("update");
+      channel.unsubscribe();
+    }
+  },[user])
+
+
   return (
      <Router>
        <Routes>

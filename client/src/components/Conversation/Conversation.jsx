@@ -9,6 +9,7 @@ import axios from 'axios';
 export default function Conversation({conversation,currentChat}) {
   const [lastMessage,setLastMessage]= useState("");
   const [conversationName,setConversationName]= useState("");
+  const [avatarURL,setAvatarURL]= useState("");
   const {user}= useContext(AuthContext);
 
   const deleteConversation = async (e)=>{
@@ -41,17 +42,17 @@ export default function Conversation({conversation,currentChat}) {
   useEffect( ()=>{
     const guestUserName = conversation.members.find(member=>member !==user.username);
    
-    const getConversationName= async ()=>{
+    const getConversationNameAndAvatar= async ()=>{
       try{
           const res= await axios.get("/users/username/"+guestUserName);
-          console.log(res.data,'  guestInfo');
+          setAvatarURL(res.data.avatarURL);
           setConversationName(res.data.name);
       }
       catch(e){
         console.log(e);
       }
     }
-    getConversationName();
+    getConversationNameAndAvatar();
   },[])
 
   useEffect(()=>{
@@ -77,11 +78,13 @@ export default function Conversation({conversation,currentChat}) {
   },[lastMessage]);
 
   return (
+    
+
     <div className="conversation">
         <div className="conversationInfo">
         <img 
           className="conversationImg"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAP+KeNJXAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
+          src={avatarURL}
           alt=""
         />
         <div className="Info">
@@ -97,5 +100,6 @@ export default function Conversation({conversation,currentChat}) {
           </button>
         </div> */}
     </div>
+   
   );
 }
