@@ -391,11 +391,21 @@ export default function Messenger() {
           <div className="conversations-wrapper">
             <h5>Conversations</h5>
             <div className="conversations">
-            {conversations.map((c) => (
-              <div onClick={() => {setCurrentChat(c)}} key={c._id}>
-                <Conversation conversation={c} currentChat={currentChat} />
-              </div>
-            ))}
+              {conversations.length>0?(
+                conversations.map((c) => (
+                  <div onClick={() => {setCurrentChat(c)}} key={c._id}>
+                    <Conversation conversation={c} currentChat={currentChat} />
+                  </div>
+                ))
+              ):(
+                <>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                  <h3 style={{marginTop:50}}>Không có cuộc trò chuyện.</h3>
+                </div>
+                </>
+              )}
+
+            
             </div>
           </div>
           
@@ -460,7 +470,12 @@ export default function Messenger() {
           </form>
         </div>
       </>):(
-          <div><h1>Khong co tin nhan</h1></div>
+          <div className="default-screen">
+            <div>
+            <h2>Welcome to The 48 Hours</h2>
+            <h3>A brand new thing.</h3> 
+            </div>
+          </div>
         )}
       </div>
     </>
